@@ -25,6 +25,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/cardViewLogin"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_350sdp"
             app:cardBackgroundColor="#99000000"

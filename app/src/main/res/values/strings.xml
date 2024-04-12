@@ -19,5 +19,13 @@
     <string name="female">Nữ</string>
     <string name="nam">Nam</string>
     <string name="_1_4">1/4</string>
-    <string name="next">NEXT</string>
+    <string name="_2_4">2/4</string>
+    <string name="_3_4">3/4</string>
+    <string name="_4_4">4/4</string>
+    <string name="next">next</string>
+    <string name="kg">Kg</string>
+    <string name="lb">Lb</string>
+    <string name="ch_n_n_v_hi_n_th_kh_i_l_ng_c_a_b_n">CHỌN ĐƠN VỊ HIỂN THỊ KHỐI LƯỢNG CỦA BẠN</string>
+    <string name="kg_lb_description">Bạn thường luyện tập theo với khối lượng tính theo KGs hay LBs? Chọn đơn vị mà bạn sử dụng, chúng tôi sẽ hiển thị đúng cách.</string>
+    <string name="back">back</string>
 </resources>
