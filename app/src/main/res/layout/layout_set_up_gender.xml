@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <TextView
+        android:id="@+id/txtSelectGender"
+        android:layout_width="@dimen/_150sdp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/_50sdp"
+        android:fontFamily="@font/helvetica_rounded_bold"
+        android:maxLines="2"
+        android:text="@string/ch_n_gi_i_t_nh_c_a_b_n"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_18ssp" />
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/txtSelectGender"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/_70sdp"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/radioFemale"
+            android:layout_width="@dimen/_120sdp"
+            android:layout_height="@dimen/_50sdp"
+            android:background="@drawable/custom_radio_selector"
+            android:button="@color/theme_background_color"
+            android:drawableStart="@drawable/baseline_female_24"
+            android:fontFamily="@font/helvetica_rounded_bold"
+            android:paddingStart="@dimen/_25sdp"
+            android:text="@string/female"
+            android:textSize="@dimen/_12ssp" />
+
+        <RadioButton
+            android:id="@+id/radioMale"
+            android:layout_width="@dimen/_120sdp"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:background="@drawable/custom_radio_selector"
+            android:button="@color/theme_background_color"
+            android:drawableStart="@drawable/baseline_male_24"
+            android:fontFamily="@font/helvetica_rounded_bold"
+            android:paddingStart="@dimen/_25sdp"
+            android:text="@string/nam"
+            android:textSize="@dimen/_12ssp" />
+    </RadioGroup>
+
+    <ImageView
+        android:id="@+id/imageGender"
+        android:layout_width="@dimen/_220sdp"
+        android:layout_height="@dimen/_220sdp"
+        android:layout_alignTop="@+id/radioGroup"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/_100sdp"
+        android:background="@drawable/baseline_female_24" />
+    <ImageView
+        android:id="@+id/imageMenGender"
+        android:layout_width="@dimen/_129sdp"
+        android:layout_height="@dimen/_310sdp"
+        android:layout_alignTop="@+id/radioGroup"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/_100sdp"
+        android:scaleType="fitCenter"
+        android:visibility="invisible"
+        android:background="@drawable/men" />
+    <ImageView
+        android:id="@+id/imageFemaleGender"
+        android:layout_width="@dimen/_208sdp"
+        android:layout_height="@dimen/_300sdp"
+        android:layout_alignTop="@+id/radioGroup"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/_100sdp"
+        android:background="@drawable/women" />
+    <TextView
+        android:id="@+id/status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/helvetica_rounded_bold"
+        android:text="@string/_1_4"
+        android:textSize="@dimen/_12ssp"
+        android:textColor="@color/black"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/_42sdp"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#1AFFFFFF"
+        android:drawableEnd="@drawable/baseline_arrow_forward_24"
+        android:text="@string/next"
+        android:fontFamily="@font/helvetica_rounded_bold"
+        android:textSize="@dimen/_12ssp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/_30sdp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="@dimen/_10sdp"/>
+</RelativeLayout>

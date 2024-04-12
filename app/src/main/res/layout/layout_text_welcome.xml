@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#1A000000"
+    android:textAlignment="center">
+    <TextView
+        android:id="@+id/textWelcome"
+        android:layout_width="match_parent"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:layout_marginTop="@dimen/_50sdp"
+        android:textSize="@dimen/_13ssp"
+        android:textColor="@color/white"
+        android:lineHeight="@dimen/_15sdp"
+        android:text="Thế giới tập luyện mới : Giúp khả năng tập luyện của bạn lên một trình độ mới, dù là ở nhà hay phòng gym, vào bất cứ thời gian nào."
+        android:textAlignment="center"
+        android:layout_height="wrap_content">
+    </TextView>
+</RelativeLayout>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/gym_dumbbell" />
+
+        <ImageButton
+            android:id="@+id/btnBack"
+            android:layout_width="@dimen/_22sdp"
+            android:layout_height="@dimen/_22sdp"
+            android:layout_marginStart="@dimen/_12sdp"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:background="@drawable/baseline_arrow_back_ios_24"
+            android:contentDescription="@string/clickBack"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_350sdp"
+            app:cardBackgroundColor="#99000000"
+            app:cardCornerRadius="15dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/txtWelcome"
+                    android:layout_width="@dimen/_200sdp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/_25sdp"
+                    android:fontFamily="sans-serif-condensed-medium"
+                    android:maxLines="2"
+                    android:text="@string/txt_fitness_training"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_18ssp" />
+
+                <EditText
+                    android:id="@+id/emailLogin"
+                    android:layout_width="@dimen/_250sdp"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_alignTop="@+id/txtWelcome"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/_90sdp"
+                    android:background="@drawable/custom_edit_text_login_page"
+                    android:fontFamily="sans-serif-condensed-medium"
+                    android:hint="@string/email"
+                    android:paddingStart="@dimen/_16sdp"
+                    android:textSize="@dimen/_15ssp" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/passwordLogin"
+                    android:layout_width="@dimen/_250sdp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/emailLogin"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/_60sdp"
+                    android:fontFamily="sans-serif-condensed-medium"
+                    android:hint="@string/password"
+                    app:endIconMode="password_toggle">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/passwordLoginInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_40sdp"
+                        android:background="@drawable/custom_edit_text_login_page"
+                        android:fontFamily="sans-serif-condensed-medium"
+                        android:inputType="textPassword"
+                        android:paddingStart="@dimen/_16sdp"
+                        android:textSize="@dimen/_15ssp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <Button
+                    android:id="@+id/buttonLogin"
+                    android:layout_width="@dimen/_250sdp"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_alignTop="@id/passwordLogin"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/_70sdp"
+                    android:background="@drawable/custom_button_login_page"
+                    android:fontFamily="sans-serif-condensed-medium"
+                    android:text="@string/log_in"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_14ssp" />
+
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

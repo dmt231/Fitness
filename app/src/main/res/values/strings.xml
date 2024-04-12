@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Fitness</string>
+    <string name="fitness">Fitness</string>
+    <string name="sign_up">ĐĂNG KÝ</string>
+    <string name="login">ĐĂNG NHẬP</string>
+    <string name="firstText">Thế giới tập luyện mới : Giúp khả năng tập luyện của bạn lên một trình độ mới, dù là ở nhà hay phòng gym, vào bất cứ thời gian nào.</string>
+    <string name="secondText">Khám phá thư viện tập luyện : Theo dõi và tham gia các thử thách tập luyện cùng chúng tôi, từ các bài tập, các buổi tập và các kế hoạch tập luyện</string>
+    <string name="thirdText">Tập luyện theo cách của bạn : Bạn có thể tập luyện tùy theo mong muốn và ý thích của bản thân, chỉ là bạn có sẵn sàng tập luyện hay không thôi !</string>
+    <string name="fourText">Theo dõi sự tiến bộ : Bạn hoàn toàn có thể theo dõi được sự tiến bộ của bản thân thông qua lịch sử tập luyện, và các kỳ lục tập luyện của bản thân</string>
+    <string name="clickBack">ClickBack</string>
+    <string name="email">Email</string>
+    <string name="txt_fitness_training">CHÀO MỪNG BẠN ĐẾN VỚI FITNESS TRAINING</string>
+    <string name="password">Mật Khẩu</string>
+    <string name="log_in">ĐĂNG NHẬP</string>
+    <string name="txtCreateAccount">Tạo Tài Khoản</string>
+    <string name="firstName">Họ Tên Đệm</string>
+    <string name="lastName">Tên</string>
+    <string name="ch_n_gi_i_t_nh_c_a_b_n">CHỌN GIỚI TÍNH CỦA BẠN</string>
+    <string name="female">Nữ</string>
+    <string name="nam">Nam</string>
+    <string name="_1_4">1/4</string>
+    <string name="next">NEXT</string>
+</resources>
