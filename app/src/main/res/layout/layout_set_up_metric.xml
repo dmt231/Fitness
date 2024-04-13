@@ -5,24 +5,35 @@
     android:background="@color/white">
 
     <TextView
-        android:id="@+id/txtSelectGender"
-        android:layout_width="@dimen/_150sdp"
+        android:id="@+id/txtSelectHeightWeight"
+        android:layout_width="@dimen/_250sdp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/_50sdp"
         android:fontFamily="@font/helvetica_rounded_bold"
         android:maxLines="2"
-        android:text="@string/ch_n_gi_i_t_nh_c_a_b_n"
+        android:text="@string/ch_n_n_v_hi_n_th_kh_i_l_ng_c_a_b_n"
         android:textAlignment="center"
         android:textColor="@color/black"
-        android:textSize="@dimen/_18ssp" />
-
+        android:textSize="@dimen/_15ssp" />
+    <TextView
+        android:id="@+id/txtDescription"
+        android:layout_width="@dimen/_250sdp"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-condensed"
+        android:textColor="@color/black"
+        android:text="@string/kg_lb_description"
+        android:textAlignment="center"
+        android:textSize="@dimen/_12ssp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignTop="@id/txtSelectHeightWeight"
+        android:layout_marginTop="@dimen/_50sdp"/>
     <RadioGroup
         android:id="@+id/radioGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/txtSelectGender"
+        android:layout_alignTop="@+id/txtDescription"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/_70sdp"
         android:orientation="horizontal">
@@ -33,10 +44,9 @@
             android:layout_height="@dimen/_50sdp"
             android:background="@drawable/custom_radio_selector"
             android:button="@color/theme_background_color"
-            android:drawableStart="@drawable/baseline_female_24"
             android:fontFamily="@font/helvetica_rounded_bold"
-            android:paddingStart="@dimen/_25sdp"
-            android:text="@string/female"
+            android:textAlignment="center"
+            android:text="@string/kg"
             android:textSize="@dimen/_12ssp" />
 
         <RadioButton
@@ -46,45 +56,38 @@
             android:layout_marginStart="@dimen/_20sdp"
             android:background="@drawable/custom_radio_selector"
             android:button="@color/theme_background_color"
-            android:drawableStart="@drawable/baseline_male_24"
             android:fontFamily="@font/helvetica_rounded_bold"
-            android:paddingStart="@dimen/_25sdp"
-            android:text="@string/nam"
+            android:textAlignment="center"
+            android:text="@string/lb"
             android:textSize="@dimen/_12ssp" />
     </RadioGroup>
 
     <ImageView
-        android:id="@+id/imageGender"
-        android:layout_width="@dimen/_220sdp"
-        android:layout_height="@dimen/_220sdp"
+        android:id="@+id/imageKG"
+        android:layout_width="@dimen/_130sdp"
+        android:layout_height="@dimen/_130sdp"
         android:layout_alignTop="@+id/radioGroup"
-        android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/_100sdp"
-        android:background="@drawable/baseline_female_24" />
+        android:layout_marginStart="@dimen/_20sdp"
+        android:layout_alignParentStart="true"
+        android:background="@drawable/kg" />
+
     <ImageView
-        android:id="@+id/imageMenGender"
-        android:layout_width="@dimen/_129sdp"
-        android:layout_height="@dimen/_310sdp"
+        android:id="@+id/imageLb"
+        android:layout_width="@dimen/_130sdp"
+        android:layout_height="@dimen/_130sdp"
         android:layout_alignTop="@+id/radioGroup"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/_100sdp"
-        android:scaleType="fitCenter"
-        android:visibility="invisible"
-        android:background="@drawable/men" />
-    <ImageView
-        android:id="@+id/imageFemaleGender"
-        android:layout_width="@dimen/_208sdp"
-        android:layout_height="@dimen/_300sdp"
-        android:layout_alignTop="@+id/radioGroup"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/_100sdp"
-        android:background="@drawable/women" />
+        android:layout_marginTop="212dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="@dimen/_20sdp"
+        android:background="@drawable/lb" />
+
     <TextView
         android:id="@+id/status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/helvetica_rounded_bold"
-        android:text="@string/_1_4"
+        android:text="@string/_2_4"
         android:textSize="@dimen/_12ssp"
         android:textColor="@color/black"
         android:layout_centerHorizontal="true"
@@ -103,4 +106,18 @@
         android:layout_marginBottom="@dimen/_30sdp"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="@dimen/_10sdp"/>
+    <Button
+        android:id="@+id/back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#1AFFFFFF"
+        android:drawableStart="@drawable/baseline_arrow_back_24"
+        android:text="@string/back"
+        android:fontFamily="@font/helvetica_rounded_bold"
+        android:textSize="@dimen/_12ssp"
+        android:textAlignment="center"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/_30sdp"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="@dimen/_10sdp"/>
 </RelativeLayout>

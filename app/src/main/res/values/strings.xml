@@ -22,10 +22,23 @@
     <string name="_2_4">2/4</string>
     <string name="_3_4">3/4</string>
     <string name="_4_4">4/4</string>
-    <string name="next">next</string>
+    <string name="next">Tiếp</string>
     <string name="kg">Kg</string>
     <string name="lb">Lb</string>
     <string name="ch_n_n_v_hi_n_th_kh_i_l_ng_c_a_b_n">CHỌN ĐƠN VỊ HIỂN THỊ KHỐI LƯỢNG CỦA BẠN</string>
     <string name="kg_lb_description">Bạn thường luyện tập theo với khối lượng tính theo KGs hay LBs? Chọn đơn vị mà bạn sử dụng, chúng tôi sẽ hiển thị đúng cách.</string>
-    <string name="back">back</string>
+    <string name="back">Quay về</string>
+    <string name="birthday">Ngày sinh của bạn ?</string>
+    <string name="birthdayDescription">Độ tuổi cũng là yếu tố quan trọng và cần thiết trong quá trình tập luyện</string>
+    <string name="day">Ngày</string>
+    <string name="month">Tháng</string>
+    <string name="year">Năm</string>
+    <string name="submit">đồng ý</string>
+    <string name="txtHeightWeight">Hãy nhập chiều cao, cân nặng của bạn</string>
+    <string name="txtDescriptionHeightWeight">Chiều cao, cân nặng là 2 yếu tố quan trọng để tính được chỉ số khối BMI của cơ thể, giúp bạn biết được tình trạng cơ thể mình.</string>
+    <string name="height">Chiều cao</string>
+    <string name="c_n_n_ng">Cân nặng</string>
+    <string name="khai_ph_ti_m_n_ng_c_a_b_n">Khai Phá Tiềm Năng Của Bạn</string>
+    <string name="b_n_s_n_s_ng_b_t_u_t_p_luy_n_th_i">Bạn đã sẵn sàng. Bắt đầu tập luyện thôi !</string>
+    <string name="txtGetStarted">Bắt Đầu</string>
 </resources>
