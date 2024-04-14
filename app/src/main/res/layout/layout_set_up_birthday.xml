@@ -5,7 +5,7 @@
     android:background="@color/white">
 
     <TextView
-        android:id="@+id/txtSelectHeightWeight"
+        android:id="@+id/txtSelectBirthday"
         android:layout_width="@dimen/_250sdp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -27,7 +27,7 @@
         android:textAlignment="center"
         android:textSize="@dimen/_12ssp"
         android:layout_centerHorizontal="true"
-        android:layout_alignTop="@id/txtSelectHeightWeight"
+        android:layout_alignTop="@id/txtSelectBirthday"
         android:layout_marginTop="@dimen/_50sdp"/>
     <LinearLayout
         android:id="@+id/linearLayout"

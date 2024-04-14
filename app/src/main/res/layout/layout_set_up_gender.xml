@@ -59,8 +59,9 @@
         android:layout_height="@dimen/_220sdp"
         android:layout_alignTop="@+id/radioGroup"
         android:layout_centerHorizontal="true"
+        android:visibility="invisible"
         android:layout_marginTop="@dimen/_100sdp"
-        android:background="@drawable/baseline_female_24" />
+        />
     <ImageView
         android:id="@+id/imageMenGender"
         android:layout_width="@dimen/_129sdp"
@@ -78,6 +79,7 @@
         android:layout_alignTop="@+id/radioGroup"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/_100sdp"
+        android:visibility="invisible"
         android:background="@drawable/women" />
     <TextView
         android:id="@+id/status"

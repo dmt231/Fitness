@@ -39,7 +39,7 @@
         android:orientation="horizontal">
 
         <RadioButton
-            android:id="@+id/radioFemale"
+            android:id="@+id/radioKg"
             android:layout_width="@dimen/_120sdp"
             android:layout_height="@dimen/_50sdp"
             android:background="@drawable/custom_radio_selector"
@@ -50,7 +50,7 @@
             android:textSize="@dimen/_12ssp" />
 
         <RadioButton
-            android:id="@+id/radioMale"
+            android:id="@+id/radioLb"
             android:layout_width="@dimen/_120sdp"
             android:layout_height="@dimen/_50sdp"
             android:layout_marginStart="@dimen/_20sdp"
