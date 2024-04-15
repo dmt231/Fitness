@@ -1,6 +1,7 @@
 package com.example.fitness.authentication.set_up_information
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,12 +20,21 @@ class SetUpMetricFragment : Fragment() {
     ): View {
         viewBinding = LayoutSetUpMetricBinding.inflate(inflater, container, false)
         setUpAnimation()
-        onSelectedMetric()
+        viewBinding.radioKg.setOnClickListener {
+            onSelectedMetric()
+        }
+        viewBinding.radioLb.setOnClickListener {
+            onSelectedMetric()
+        }
         viewBinding.next.setOnClickListener {
+            saveMetric()
             goToNextStep()
         }
         viewBinding.back.setOnClickListener {
             onBack()
+        }
+        viewBinding.layoutMetric.setOnClickListener {
+
         }
         return viewBinding.root
     }
@@ -32,6 +42,7 @@ class SetUpMetricFragment : Fragment() {
         val setUpBirthday = SetUpBirthDayFragment()
         val fragmentTrans = requireActivity().supportFragmentManager.beginTransaction()
         fragmentTrans.add(R.id.layoutLoginSignUp, setUpBirthday)
+        fragmentTrans.addToBackStack(setUpBirthday.tag)
         fragmentTrans.commit()
     }
 
@@ -67,11 +78,13 @@ class SetUpMetricFragment : Fragment() {
         viewBinding.radioGroup.animate().alpha(1F).translationX(0F).setDuration(800).start()
     }
     private fun onSelectedMetric(){
-        if(viewBinding.radioKg.isSelected){
+        if(viewBinding.radioKg.isChecked){
             metric = requireContext().getString(R.string.kg)
+            Log.d("metric" , metric!!)
         }
-        else if(viewBinding.radioLb.isSelected){
+        else if(viewBinding.radioLb.isChecked){
             metric = requireContext().getString(R.string.lb)
+            Log.d("metric" , metric!!)
         }
     }
     private fun onBack(){

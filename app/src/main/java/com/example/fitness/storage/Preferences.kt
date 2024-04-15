@@ -65,4 +65,14 @@ class Preferences(private val context: Context) {
         val sharedPreferences : SharedPreferences? = context.getSharedPreferences(myPreferences, Context.MODE_PRIVATE)
         return sharedPreferences!!.getString("Height", null)
     }
+    fun putBMIValues(bmi : String){
+        val sharedPreferences : SharedPreferences? = context.getSharedPreferences(myPreferences, Context.MODE_PRIVATE)
+        val editor : SharedPreferences.Editor = sharedPreferences!!.edit()
+        editor.putString("Bmi", bmi)
+        editor.apply()
+    }
+    fun getBMIValues() : String? {
+        val sharedPreferences : SharedPreferences? = context.getSharedPreferences(myPreferences, Context.MODE_PRIVATE)
+        return sharedPreferences!!.getString("Bmi", null)
+    }
 }

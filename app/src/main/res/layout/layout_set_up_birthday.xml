@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/layoutBirthDay"
     android:background="@color/white">
 
     <TextView
@@ -74,7 +75,6 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/helvetica_bold"
         android:textSize="@dimen/_35ssp"
-        android:text="22"
         android:textColor="@color/black"
         android:layout_alignTop="@+id/linearLayout"
         android:layout_marginTop="@dimen/_50sdp"

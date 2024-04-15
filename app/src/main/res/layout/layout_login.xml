@@ -97,7 +97,17 @@
                     android:text="@string/log_in"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_14ssp" />
-
+                <ProgressBar
+                    android:id="@+id/progressBarSignIn"
+                    android:layout_width="wrap_content"
+                    android:layout_alignTop="@id/buttonLogin"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_180sdp"
+                    android:layout_centerHorizontal="true"
+                    android:visibility="invisible"
+                    android:indeterminate="true"
+                    android:indeterminateDrawable="@drawable/custom_progress_bar"
+                    />
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
     </androidx.constraintlayout.widget.ConstraintLayout>

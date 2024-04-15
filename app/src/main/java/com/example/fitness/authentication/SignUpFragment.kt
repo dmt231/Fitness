@@ -1,7 +1,6 @@
 package com.example.fitness.authentication
 
 import android.os.Bundle
-import android.util.Log
 import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
@@ -28,25 +27,30 @@ class SignUpFragment : Fragment() {
             onBack()
         }
         viewBinding.buttonSignUp.setOnClickListener {
-//            if (validateInput()) {
-//                viewBinding.progressBarSignUp.visibility = View.VISIBLE
-//                viewBinding.buttonSignUp.visibility = View.INVISIBLE
-//                userRepository.createAuthUser(
-//                    viewBinding.emailSignUp.text.toString(),
-//                    viewBinding.passwordLoginInput.text.toString(),
-//                    viewBinding.firstName.text.toString(),
-//                    viewBinding.lastName.text.toString(),
-//                    requireActivity(),
-//                    object : UserRepository.OnSuccessListener{
-//                        override fun onSuccessListener(userId: String) {
-//                            viewBinding.progressBarSignUp.visibility = View.GONE
-//                            saveUserId()
-//                            onChangedToSetUpGender(userIdAuth!!)
-//                        }
-//                    }
-//                )
-//            }
-            onChangedToSetUpGender()
+            if (validateInput()) {
+                viewBinding.progressBarSignUp.visibility = View.VISIBLE
+                viewBinding.buttonSignUp.visibility = View.INVISIBLE
+                userRepository.createAuthUser(
+                    viewBinding.emailSignUp.text.toString(),
+                    viewBinding.passwordLoginInput.text.toString(),
+                    viewBinding.firstName.text.toString(),
+                    viewBinding.lastName.text.toString(),
+                    requireActivity(),
+                    object : UserRepository.OnCompleteListener{
+                        override fun onSuccessListener(userId: String) {
+                            viewBinding.progressBarSignUp.visibility = View.GONE
+                            userIdAuth = userId
+                            saveUserId()
+                            onChangedToSetUpGender()
+                        }
+
+                        override fun onFailedListener() {
+                            viewBinding.progressBarSignUp.visibility = View.GONE
+                            viewBinding.buttonSignUp.visibility = View.VISIBLE
+                        }
+                    }
+                )
+            }
         }
         setUpAnimation()
         return viewBinding.root

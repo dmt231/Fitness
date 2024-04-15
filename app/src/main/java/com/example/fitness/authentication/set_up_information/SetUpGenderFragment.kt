@@ -1,6 +1,7 @@
 package com.example.fitness.authentication.set_up_information
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,21 +20,25 @@ class SetUpGenderFragment : Fragment() {
     ): View {
         viewBinding = LayoutSetUpGenderBinding.inflate(inflater, container, false)
         setUpAnimation()
-        onSelectedGender()
+        viewBinding.layoutGender.setOnClickListener {
+
+        }
         viewBinding.radioFemale.setOnClickListener {
             viewBinding.imageFemaleGender.visibility = View.VISIBLE
             viewBinding.imageGender.setImageResource(R.drawable.baseline_female_24)
             viewBinding.imageGender.visibility = View.VISIBLE
             viewBinding.imageMenGender.visibility = View.INVISIBLE
+            onSelectedGender()
         }
         viewBinding.radioMale.setOnClickListener {
             viewBinding.imageMenGender.visibility = View.VISIBLE
             viewBinding.imageFemaleGender.visibility = View.INVISIBLE
             viewBinding.imageGender.setImageResource(R.drawable.baseline_male_24)
             viewBinding.imageGender.visibility = View.VISIBLE
+            onSelectedGender()
         }
         viewBinding.next.setOnClickListener {
-            //saveGender()
+            saveGender()
             goToNextStep()
         }
         return viewBinding.root
@@ -43,6 +48,7 @@ class SetUpGenderFragment : Fragment() {
         val setUpMetricFragment = SetUpMetricFragment()
         val fragmentTrans = requireActivity().supportFragmentManager.beginTransaction()
         fragmentTrans.add(R.id.layoutLoginSignUp, setUpMetricFragment)
+        fragmentTrans.addToBackStack(setUpMetricFragment.tag)
         fragmentTrans.commit()
     }
 
@@ -65,11 +71,13 @@ class SetUpGenderFragment : Fragment() {
         viewBinding.radioGroup.animate().alpha(1F).translationY(0F).setDuration(800).start()
     }
     private fun onSelectedGender(){
-        if(viewBinding.radioFemale.isSelected){
+        if(viewBinding.radioFemale.isChecked){
             gender = requireContext().getString(R.string.female)
+            Log.d("gender : ", gender!!)
         }
-        else if(viewBinding.radioMale.isSelected){
+        else if(viewBinding.radioMale.isChecked){
             gender = requireContext().getString(R.string.nam)
+            Log.d("gender : ", gender!!)
         }
     }
 }

@@ -12,6 +12,7 @@ import com.example.fitness.databinding.LayoutDialogPickDateBinding
 import com.example.fitness.databinding.LayoutSetUpBirthdayBinding
 import com.example.fitness.databinding.LayoutSetUpMetricBinding
 import com.example.fitness.storage.Preferences
+import java.util.*
 
 class SetUpBirthDayFragment : Fragment() {
     private lateinit var viewBinding: LayoutSetUpBirthdayBinding
@@ -24,15 +25,17 @@ class SetUpBirthDayFragment : Fragment() {
         viewBinding = LayoutSetUpBirthdayBinding.inflate(inflater, container, false)
         setUpAnimation()
         viewBinding.next.setOnClickListener {
-            //saveBirthday()
+            saveBirthday()
             goToNextStep()
         }
         viewBinding.back.setOnClickListener {
             onBack()
         }
         viewBinding.day.setOnClickListener {
-            Log.d("Click : ", "True")
             onSelectedBirthday()
+        }
+        viewBinding.layoutBirthDay.setOnClickListener {
+
         }
         return viewBinding.root
     }
@@ -41,6 +44,7 @@ class SetUpBirthDayFragment : Fragment() {
         val setUpWeightHeightFragment = SetUpWeightHeightFragment()
         val fragmentTrans = requireActivity().supportFragmentManager.beginTransaction()
         fragmentTrans.add(R.id.layoutLoginSignUp, setUpWeightHeightFragment)
+        fragmentTrans.addToBackStack(setUpWeightHeightFragment.tag)
         fragmentTrans.commit()
     }
 
@@ -95,6 +99,17 @@ class SetUpBirthDayFragment : Fragment() {
             viewBinding.day.setText(day)
             viewBinding.month.setText(month.toString())
             viewBinding.year.setText(year)
+            val calendarBirthday = Calendar.getInstance()
+            calendarBirthday.set(binding.spinnerPickDate.year, binding.spinnerPickDate.month, binding.spinnerPickDate.dayOfMonth)
+
+
+            val calendarToday = Calendar.getInstance()
+
+            var age = calendarToday.get(Calendar.YEAR) - calendarBirthday.get(Calendar.YEAR)
+            if (calendarToday.get(Calendar.DAY_OF_YEAR) < calendarBirthday.get(Calendar.DAY_OF_YEAR)) {
+                age--
+            }
+            viewBinding.txtYearOld.text = age.toString()
             birthDay = "$day/$month/$year"
             dialog.cancel()
         }
