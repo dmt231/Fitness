@@ -42,4 +42,13 @@
     <string name="b_n_s_n_s_ng_b_t_u_t_p_luy_n_th_i">Bạn đã sẵn sàng. Bắt đầu tập luyện thôi !</string>
     <string name="txtGetStarted">Bắt Đầu</string>
     <string name="BMI_Text">BMI Của Bạn</string>
+    <string name="explore">Khám Phá</string>
+    <string name="create">Sáng Tạo</string>
+    <string name="progress">Quá Trình</string>
+    <string name="c_i_t">Cài Đặt</string>
+    <string name="type">Theo Thể Loại</string>
+    <string name="th_vi_n_b_i_t_p">Thư Viện Bài Tập</string>
+    <string name="theo_th_i_gian">Theo Thời Gian</string>
+    <string name="theo_d_ng_c">Theo Dụng Cụ</string>
+    <string name="theo_b_ph_n">Theo Bộ Phận</string>
 </resources>

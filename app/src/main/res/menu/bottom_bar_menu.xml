@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:iconTint="@color/theme_background_color" android:title="@string/explore" android:id="@+id/explore" android:icon="@drawable/baseline_explore_24" />
+    <item android:iconTint="@color/theme_background_color" android:title="@string/create" android:id="@+id/create" android:icon="@drawable/tab"/>
+    <item android:iconTint="@color/theme_background_color" android:title="@string/progress" android:id="@+id/progress" android:icon="@drawable/signal" />
+    <item android:iconTint="@color/theme_background_color" android:title="@string/c_i_t" android:id="@+id/setting" android:icon="@drawable/settings"/>
+
+</menu>
