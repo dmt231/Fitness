@@ -2,6 +2,7 @@
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#99FFFFFF"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
@@ -20,9 +21,10 @@
             android:textSize="@dimen/_12ssp" />
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView_Type"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginStart="@dimen/_5sdp"
             android:layout_marginTop="@dimen/_15sdp" />
 
         <TextView
@@ -36,9 +38,10 @@
             android:textSize="@dimen/_12ssp" />
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewDuration"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginStart="@dimen/_5sdp"
             android:layout_marginTop="@dimen/_15sdp" />
 
         <TextView
@@ -52,9 +55,10 @@
             android:textSize="@dimen/_12ssp" />
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewEquipment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginStart="@dimen/_5sdp"
             android:layout_marginTop="@dimen/_15sdp" />
         <TextView
             android:layout_width="wrap_content"
@@ -66,10 +70,11 @@
             android:layout_marginTop="@dimen/_20sdp"
             android:layout_marginStart="@dimen/_10sdp"/>
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewBodyPart"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_15sdp"
-            android:layout_marginStart="@dimen/_10sdp"/>
+            android:layout_marginStart="@dimen/_5sdp"/>
         <androidx.cardview.widget.CardView
             android:layout_width="@dimen/_280sdp"
             android:layout_height="@dimen/_120sdp"

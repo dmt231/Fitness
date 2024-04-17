@@ -5,7 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.example.fitness.R
 import com.example.fitness.databinding.LayoutExploreBinding
+import com.example.fitness.explore.workout.MenuWorkoutFragment
 import com.google.android.material.tabs.TabLayout
 
 class ExploreFragment : Fragment() {
@@ -17,11 +19,40 @@ class ExploreFragment : Fragment() {
     ): View {
         viewBinding = LayoutExploreBinding.inflate(inflater, container, false)
         setUpTabLayout()
+        changedToWorkoutMenuScreen()
         return viewBinding.root
     }
     private fun setUpTabLayout(){
         viewBinding.tabLayout.addTab(viewBinding.tabLayout.newTab().setText("Buổi Tập"))
         viewBinding.tabLayout.addTab(viewBinding.tabLayout.newTab().setText("Lịch Tập"))
         viewBinding.tabLayout.tabGravity = TabLayout.GRAVITY_FILL
+
+        viewBinding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                val position = tab?.position
+                if(position == 0){
+                    changedToWorkoutMenuScreen()
+                }
+                else{
+                    requireActivity().supportFragmentManager.popBackStack()
+                }
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+
+            }
+
+        })
+    }
+    private fun changedToWorkoutMenuScreen(){
+        val menuWorkoutFragment = MenuWorkoutFragment()
+        val fragmentTrans = requireActivity().supportFragmentManager.beginTransaction()
+        fragmentTrans.add(R.id.contentLayout, menuWorkoutFragment)
+        fragmentTrans.addToBackStack(menuWorkoutFragment.tag)
+        fragmentTrans.commit()
     }
 }
