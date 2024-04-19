@@ -6,11 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.fitness.R
 import com.example.fitness.adapter_recyclerView.AdapterForBodyPartWorkout
 import com.example.fitness.adapter_recyclerView.AdapterForDurationWorkout
 import com.example.fitness.adapter_recyclerView.AdapterForEquipmentWorkout
 import com.example.fitness.adapter_recyclerView.AdapterForTypeWorkout
 import com.example.fitness.databinding.LayoutMenuWorkoutBinding
+import com.example.fitness.explore.workout.excercise.MenuBodyPartExercise
 
 class MenuWorkoutFragment : Fragment() {
     private lateinit var viewBinding : LayoutMenuWorkoutBinding
@@ -39,6 +41,9 @@ class MenuWorkoutFragment : Fragment() {
         setUpTimeRecyclerView()
         setUpEquipmentRecyclerView()
         setUpBodyPartRecyclerView()
+        viewBinding.libraryExercise.setOnClickListener {
+            onChangedToMenuExercise()
+        }
         return viewBinding.root
     }
     private fun initListType(){
@@ -105,5 +110,12 @@ class MenuWorkoutFragment : Fragment() {
         viewBinding.recyclerViewBodyPart.layoutManager = layout
         adapterBodyPart = AdapterForBodyPartWorkout(listBodyPart)
         viewBinding.recyclerViewBodyPart.adapter = adapterBodyPart
+    }
+    private fun onChangedToMenuExercise(){
+        val menuExercise = MenuBodyPartExercise()
+        val fragmentTrans = requireActivity().supportFragmentManager.beginTransaction()
+        fragmentTrans.replace(R.id.layout_main_activity, menuExercise)
+        fragmentTrans.addToBackStack(menuExercise.tag)
+        fragmentTrans.commit()
     }
 }

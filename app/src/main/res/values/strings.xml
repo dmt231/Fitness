@@ -53,4 +53,15 @@
     <string name="theo_b_ph_n">Theo Bộ Phận</string>
     <string name="body_weight">Bodyweight</string>
     <string name="mins">Phút</string>
+    <string name="tay_tr_c">Tay Trước</string>
+    <string name="tay_sau">Tay Sau</string>
+    <string name="l_ng">Lưng</string>
+    <string name="ng_c">Ngực</string>
+    <string name="vai">Vai</string>
+    <string name="i_tr_c">Đùi Trước</string>
+    <string name="i_sau">Đùi Sau</string>
+    <string name="m_ng">Mông</string>
+    <string name="abs_core"><![CDATA[Abs & Core]]></string>
+    <string name="t_m_ki_m_b_i_t_p">Tìm kiếm bài tập</string>
+    <string name="to_n_th_n">Toàn Thân</string>
 </resources>
