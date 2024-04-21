@@ -1,6 +1,6 @@
 package com.example.fitness.model
 
-class Exercise(
+class Exercise (
     id: String?,
     description: String?,
     equipment: String?,
@@ -10,7 +10,7 @@ class Exercise(
     type: String?,
     imgCovered: String?,
     srcVideo: String?
-) {
+) : java.io.Serializable {
     private var id: String? = null
     private var description: String? = null
     private var equipment: String? = null

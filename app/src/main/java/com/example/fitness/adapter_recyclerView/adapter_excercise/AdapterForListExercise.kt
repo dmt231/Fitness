@@ -9,10 +9,12 @@ import com.example.fitness.databinding.LayoutCustomItemListExerciseBinding
 import com.example.fitness.model.Exercise
 
 
-class AdapterForListExercise(listExercise: ArrayList<Exercise>) : RecyclerView.Adapter<ViewHolderListExercise>() {
+class AdapterForListExercise(listExercise: ArrayList<Exercise>,onClick : OnClickListener) : RecyclerView.Adapter<ViewHolderListExercise>() {
     private var listExercise: ArrayList<Exercise>
+    private var onClick : OnClickListener
     init {
         this.listExercise = listExercise
+        this.onClick = onClick
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderListExercise {
        val viewBinding = LayoutCustomItemListExerciseBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -29,6 +31,12 @@ class AdapterForListExercise(listExercise: ArrayList<Exercise>) : RecyclerView.A
             .load(model.getImage())
             .into(holder.viewBinding.imagesCustomList)
         holder.viewBinding.txtCustomList.text = model.getName()
+        holder.viewBinding.linearLayoutCustomItem.setOnClickListener {
+            onClick.onClickListener(model)
+        }
+    }
+    interface OnClickListener{
+        fun onClickListener(exercise: Exercise)
     }
 }
 class ViewHolderListExercise(viewBinding: LayoutCustomItemListExerciseBinding) :

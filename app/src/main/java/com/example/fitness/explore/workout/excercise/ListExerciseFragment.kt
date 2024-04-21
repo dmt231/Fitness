@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.fitness.R
 import com.example.fitness.adapter_recyclerView.adapter_excercise.AdapterForListExercise
 import com.example.fitness.databinding.LayoutExerciseBinding
 import com.example.fitness.model.Exercise
@@ -28,7 +29,14 @@ class ListExerciseFragment : Fragment() {
         setUpRecyclerView()
         getDataFromMenu()
         handleInputData()
+        viewBinding.btCancel.setOnClickListener {
+            backToMenu()
+        }
         return viewBinding.root
+    }
+
+    private fun backToMenu() {
+        requireActivity().supportFragmentManager.popBackStack()
     }
 
     private fun handleInputData() {
@@ -45,6 +53,7 @@ class ListExerciseFragment : Fragment() {
                 for(exercise in it){
                     listExercise.add(exercise)
                 }
+                viewBinding.progressBar.visibility = View.GONE
                 adapterListExercise.notifyDataSetChanged()
             }
         }
@@ -57,6 +66,7 @@ class ListExerciseFragment : Fragment() {
                 for(exercise in it){
                     listExercise.add(exercise)
                 }
+                viewBinding.progressBar.visibility = View.GONE
                 adapterListExercise.notifyDataSetChanged()
             }
         }
@@ -65,7 +75,18 @@ class ListExerciseFragment : Fragment() {
         viewBinding.recyclerViewExercise.setHasFixedSize(false)
         val layout = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
         viewBinding.recyclerViewExercise.layoutManager = layout
-        adapterListExercise = AdapterForListExercise(listExercise)
+        adapterListExercise = AdapterForListExercise(listExercise, object : AdapterForListExercise.OnClickListener{
+            override fun onClickListener(exercise: Exercise) {
+                val detailExercise = DetailExercise()
+                val fragmentTrans = requireActivity().supportFragmentManager.beginTransaction()
+                val bundle = Bundle()
+                bundle.putSerializable("exercise", exercise)
+                detailExercise.arguments = bundle
+                fragmentTrans.add(R.id.layout_main_activity, detailExercise)
+                fragmentTrans.addToBackStack(detailExercise.tag)
+                fragmentTrans.commit()
+            }
+        })
         viewBinding.recyclerViewExercise.adapter = adapterListExercise
     }
     private fun getDataFromMenu(){
