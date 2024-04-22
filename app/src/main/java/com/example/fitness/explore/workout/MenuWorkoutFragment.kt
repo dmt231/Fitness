@@ -1,6 +1,7 @@
 package com.example.fitness.explore.workout
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,6 +28,7 @@ class MenuWorkoutFragment : Fragment() {
 
     private lateinit var adapterBodyPart : AdapterForBodyPartWorkout
     private lateinit var listBodyPart : ArrayList<String>
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -48,7 +50,7 @@ class MenuWorkoutFragment : Fragment() {
     }
     private fun initListType(){
         listType = ArrayList()
-        listType.add("Trọng lượng cơ thể")
+        listType.add("Trọng Lượng Cơ Thể")
         listType.add("Cardio")
         listType.add("Kháng Lực")
         listType.add("Giãn Cơ")
@@ -68,7 +70,7 @@ class MenuWorkoutFragment : Fragment() {
         listEquipment.add("Tạ Đòn")
         listEquipment.add("Máy Và Dây Cáp")
         listEquipment.add("Dây Kháng Lực")
-        listEquipment.add("Không Có")
+        listEquipment.add("Không Dụng Cụ")
     }
     private fun initListBodyPart(){
         listBodyPart = ArrayList()
@@ -87,28 +89,46 @@ class MenuWorkoutFragment : Fragment() {
         viewBinding.recyclerViewType.setHasFixedSize(false)
         val layout = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
         viewBinding.recyclerViewType.layoutManager = layout
-        adapterType = AdapterForTypeWorkout(listType)
+        adapterType = AdapterForTypeWorkout(listType, object : AdapterForTypeWorkout.OnClickListener{
+
+            override fun onClickListener(query: String, title: String) {
+                onChangedToListWorkout("Type", query, title)
+                Log.d("Data", query + title)
+            }
+        })
         viewBinding.recyclerViewType.adapter = adapterType
     }
     private fun setUpTimeRecyclerView(){
         viewBinding.recyclerViewDuration.setHasFixedSize(false)
         val layout = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
         viewBinding.recyclerViewDuration.layoutManager = layout
-        adapterTime = AdapterForDurationWorkout(listTime)
+        adapterTime = AdapterForDurationWorkout(listTime, object : AdapterForDurationWorkout.OnClickListener{
+            override fun onClickListener(time: String, title: String) {
+               onChangedToListWorkout("Time", time, title)
+            }
+        })
         viewBinding.recyclerViewDuration.adapter = adapterTime
     }
     private fun setUpEquipmentRecyclerView(){
         viewBinding.recyclerViewEquipment.setHasFixedSize(false)
         val layout = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
         viewBinding.recyclerViewEquipment.layoutManager = layout
-        adapterEquipment = AdapterForEquipmentWorkout(listEquipment)
+        adapterEquipment = AdapterForEquipmentWorkout(listEquipment, object : AdapterForEquipmentWorkout.OnClickListener{
+            override fun onClickListener(equipment: String, title: String) {
+                onChangedToListWorkout("Equipment", equipment, title)
+            }
+        })
         viewBinding.recyclerViewEquipment.adapter = adapterEquipment
     }
     private fun setUpBodyPartRecyclerView(){
         viewBinding.recyclerViewBodyPart.setHasFixedSize(false)
         val layout = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
         viewBinding.recyclerViewBodyPart.layoutManager = layout
-        adapterBodyPart = AdapterForBodyPartWorkout(listBodyPart)
+        adapterBodyPart = AdapterForBodyPartWorkout(listBodyPart, object : AdapterForBodyPartWorkout.OnClickListener{
+            override fun onClickListener(query: String, title: String) {
+                onChangedToListWorkout("Body Part", query, title)
+            }
+        })
         viewBinding.recyclerViewBodyPart.adapter = adapterBodyPart
     }
     private fun onChangedToMenuExercise(){
@@ -116,6 +136,18 @@ class MenuWorkoutFragment : Fragment() {
         val fragmentTrans = requireActivity().supportFragmentManager.beginTransaction()
         fragmentTrans.replace(R.id.layout_main_activity, menuExercise)
         fragmentTrans.addToBackStack(menuExercise.tag)
+        fragmentTrans.commit()
+    }
+    private fun onChangedToListWorkout(type : String, query : String, title : String){
+        val listWorkout = ListWorkout()
+        val fragmentTrans = requireActivity().supportFragmentManager.beginTransaction()
+        val bundle = Bundle()
+        bundle.putString("Type", type)
+        bundle.putString("Query", query)
+        bundle.putString("Title", title)
+        listWorkout.arguments = bundle
+        fragmentTrans.replace(R.id.layout_main_activity, listWorkout)
+        fragmentTrans.addToBackStack(listWorkout.tag)
         fragmentTrans.commit()
     }
 }

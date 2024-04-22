@@ -3,6 +3,7 @@ package com.example.fitness.repository
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.fitness.model.Exercise
+import com.example.fitness.model.Workout
 import com.google.firebase.firestore.FirebaseFirestore
 
 

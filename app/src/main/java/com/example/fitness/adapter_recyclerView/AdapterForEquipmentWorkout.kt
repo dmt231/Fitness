@@ -7,12 +7,13 @@ import com.example.fitness.R
 import com.example.fitness.databinding.LayoutCustomItemEquipementWithImagesBinding
 import com.example.fitness.databinding.LayoutCustomItemTypeWithImagesBinding
 
-class AdapterForEquipmentWorkout(listEquipment: ArrayList<String>) :
+class AdapterForEquipmentWorkout(listEquipment: ArrayList<String>, onClickListener: OnClickListener) :
     RecyclerView.Adapter<ViewHolderEquipmentWorkout>() {
     private var listOfEquipment: ArrayList<String>
-
+    private var onClickListener : OnClickListener
     init {
         this.listOfEquipment = listEquipment
+        this.onClickListener = onClickListener
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderEquipmentWorkout {
@@ -48,8 +49,29 @@ class AdapterForEquipmentWorkout(listEquipment: ArrayList<String>) :
                 holder.viewBinding.imageForEquipment.setImageResource(R.drawable.abs)
             }
         }
+        holder.viewBinding.txtForEquipment.setOnClickListener {
+            when (type) {
+                "Tạ Đơn" -> {
+                    onClickListener.onClickListener("Dumbbell", "Tạ Đơn")
+                }
+                "Tạ Đòn" -> {
+                    onClickListener.onClickListener("Barbell", "Tạ Đòn")
+                }
+                "Máy Và Dây Cáp" -> {
+                    onClickListener.onClickListener("Machine & Cable", "Máy Và Dây Cáp")
+                }
+                "Dây Kháng Lực" -> {
+                    onClickListener.onClickListener("Resistance Band", "Dây Kháng Lực")
+                }
+                "Không Dụng Cụ" ->{
+                    onClickListener.onClickListener("None", "Không Dụng Cụ")
+                }
+            }
+        }
     }
-
+    interface OnClickListener{
+        fun onClickListener(equipment : String, title : String)
+    }
 }
 
 class ViewHolderEquipmentWorkout(viewBinding: LayoutCustomItemEquipementWithImagesBinding) :

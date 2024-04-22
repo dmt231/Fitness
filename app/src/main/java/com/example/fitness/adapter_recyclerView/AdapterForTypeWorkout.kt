@@ -6,12 +6,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.fitness.R
 import com.example.fitness.databinding.LayoutCustomItemTypeWithImagesBinding
 
-class AdapterForTypeWorkout(listType: ArrayList<String>) :
+class AdapterForTypeWorkout(listType: ArrayList<String>, onClickListener : OnClickListener) :
     RecyclerView.Adapter<ViewHolderTypeWorkout>() {
     private var listOfType: ArrayList<String>
-
+    private var onClick: OnClickListener
     init {
         this.listOfType = listType
+        this.onClick = onClickListener
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderTypeWorkout {
@@ -31,7 +32,7 @@ class AdapterForTypeWorkout(listType: ArrayList<String>) :
         val type = listOfType[position]
         holder.viewBinding.txtForType.text = type
         when (type) {
-            "Trọng lượng cơ thể" -> {
+            "Trọng Lượng Cơ Thể" -> {
                 holder.viewBinding.imageForType.setImageResource(R.drawable.pull_up_bar)
             }
             "Cardio" -> {
@@ -44,8 +45,26 @@ class AdapterForTypeWorkout(listType: ArrayList<String>) :
                 holder.viewBinding.imageForType.setImageResource(R.drawable.stretch)
             }
         }
+        holder.viewBinding.txtForType.setOnClickListener {
+            when (type) {
+                "Trọng Lượng Cơ Thể" -> {
+                    onClick.onClickListener("BodyWeight", type)
+                }
+                "Cardio" -> {
+                    onClick.onClickListener("Cardio", type)
+                }
+                "Kháng Lực" -> {
+                    onClick.onClickListener("Resistance", type)
+                }
+                "Giãn Cơ" -> {
+                    onClick.onClickListener("Stretching", type)
+                }
+            }
+        }
     }
-
+    interface OnClickListener{
+        fun onClickListener(query : String, title : String)
+    }
 }
 
 class ViewHolderTypeWorkout(viewBinding: LayoutCustomItemTypeWithImagesBinding) :
