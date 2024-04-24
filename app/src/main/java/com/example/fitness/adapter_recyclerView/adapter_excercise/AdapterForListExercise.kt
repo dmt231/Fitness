@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.fitness.adapter_recyclerView.ViewHolderTypeWorkout
 import com.example.fitness.databinding.LayoutCustomItemListExerciseBinding
 import com.example.fitness.model.Exercise
 

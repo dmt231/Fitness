@@ -1,0 +1,49 @@
+package com.example.fitness.adapter_recyclerView.adapter_excercise
+
+import android.annotation.SuppressLint
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.example.fitness.databinding.LayoutListExerciseInWorkoutBinding
+import com.example.fitness.model.Exercise
+import com.example.fitness.model.ExerciseInWorkout
+import com.example.fitness.model.Workout
+
+class AdapterListExerciseInWorkout(listExercise: ArrayList<ExerciseInWorkout> , onClick : OnClickListenerExerciseInWorkout) : RecyclerView.Adapter<ViewHolderListExerciseInWorkout>() {
+    private var listExercise: ArrayList<ExerciseInWorkout>
+    private var onClick : OnClickListenerExerciseInWorkout
+    init {
+        this.listExercise = listExercise
+        this.onClick = onClick
+    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderListExerciseInWorkout {
+        val viewBinding = LayoutListExerciseInWorkoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolderListExerciseInWorkout(viewBinding)
+    }
+
+    override fun getItemCount(): Int {
+        return listExercise.size
+    }
+
+    @SuppressLint("SetTextI18n")
+    override fun onBindViewHolder(holder: ViewHolderListExerciseInWorkout, position: Int) {
+        val exerciseModel = listExercise[position]
+        Glide.with(holder.viewBinding.imagesCustomList)
+            .load(exerciseModel.getImage())
+            .into(holder.viewBinding.imagesCustomList)
+        holder.viewBinding.nameExercise.text = exerciseModel.getName()
+        holder.viewBinding.setRep.text = exerciseModel.getSetRep()
+    }
+    interface OnClickListenerExerciseInWorkout{
+        fun onClickListener(exercise: Exercise)
+    }
+}
+class ViewHolderListExerciseInWorkout(viewBinding: LayoutListExerciseInWorkoutBinding) :
+    RecyclerView.ViewHolder(viewBinding.root) {
+    var viewBinding: LayoutListExerciseInWorkoutBinding
+
+    init {
+        this.viewBinding = viewBinding
+    }
+}

@@ -9,7 +9,7 @@ class Workout(
     bodyPart: String?,
     type: String?,
     imgCovered: String?,
-    time: Int?, repeat: Int?, listExercise: ArrayList<ExerciseInWorkout>) {
+    time: Int?, repeat: Int?, listExercise: ArrayList<ExerciseInWorkout>) : java.io.Serializable{
      var id: String? = null
      var difficulty: String? = null
      var equipment: String? = null

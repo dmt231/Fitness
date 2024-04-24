@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.fitness.R
 import com.example.fitness.adapter_recyclerView.adapter_excercise.AdapterForListExercise
 import com.example.fitness.adapter_recyclerView.adapter_workout.AdapterForListWorkout
 import com.example.fitness.databinding.LayoutListOfWorkoutBinding
@@ -34,6 +35,9 @@ class ListWorkout : Fragment() {
         setUpTitleData()
         getListOfWorkout()
         setUpRecyclerView()
+        viewBinding.btnBack.setOnClickListener {
+            requireActivity().supportFragmentManager.popBackStack()
+        }
         return viewBinding.root
     }
     private fun getDataFromMenu(){
@@ -64,9 +68,19 @@ class ListWorkout : Fragment() {
         viewBinding.recyclerViewWorkout.layoutManager = layout
         adapterListWorkout = AdapterForListWorkout(listWorkout, object : AdapterForListWorkout.OnClickListener{
             override fun onClickListener(workout: Workout) {
-                TODO("Not yet implemented")
+                onChangeToDetailWorkout(workout)
             }
         })
         viewBinding.recyclerViewWorkout.adapter = adapterListWorkout
+    }
+    private fun onChangeToDetailWorkout(workout : Workout){
+        val detailWorkout = DetailWorkout()
+        val fragmentTrans = requireActivity().supportFragmentManager.beginTransaction()
+        val bundle = Bundle()
+        bundle.putSerializable("workout", workout)
+        detailWorkout.arguments = bundle
+        fragmentTrans.add(R.id.layout_main_activity, detailWorkout)
+        fragmentTrans.addToBackStack(null)
+        fragmentTrans.commit()
     }
 }
