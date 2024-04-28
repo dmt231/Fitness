@@ -34,9 +34,12 @@ class AdapterListExerciseInWorkout(listExercise: ArrayList<ExerciseInWorkout> , 
             .into(holder.viewBinding.imagesCustomList)
         holder.viewBinding.nameExercise.text = exerciseModel.getName()
         holder.viewBinding.setRep.text = exerciseModel.getSetRep()
+        holder.viewBinding.linearLayoutCustomItem.setOnClickListener {
+            onClick.onClickListener(exerciseModel.getIdExercise().toString())
+        }
     }
     interface OnClickListenerExerciseInWorkout{
-        fun onClickListener(exercise: Exercise)
+        fun onClickListener(idExercise: String)
     }
 }
 class ViewHolderListExerciseInWorkout(viewBinding: LayoutListExerciseInWorkoutBinding) :

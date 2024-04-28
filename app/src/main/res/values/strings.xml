@@ -69,4 +69,8 @@
     <string name="t_m_ki_m_bu_i_t_p">Tìm kiểm buổi tập</string>
     <string name="chi_ti_t_bu_i_t_p">Chi Tiết Buổi Tập</string>
     <string name="danh_s_ch_b_i_t_p">Danh Sách Bài Tập</string>
+    <string name="c_i_t_th_i_gian_ngh">Cài đặt thời gian nghỉ</string>
+    <string name="ho_n_t_t">Hoàn Tất</string>
+    <string name="h_y">HỦY</string>
+    <string name="skip">Bỏ Qua</string>
 </resources>

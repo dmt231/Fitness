@@ -2,6 +2,8 @@ package com.example.fitness.explore.workout
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -38,6 +40,7 @@ class ListWorkout : Fragment() {
         viewBinding.btnBack.setOnClickListener {
             requireActivity().supportFragmentManager.popBackStack()
         }
+        searchWorkout()
         return viewBinding.root
     }
     private fun getDataFromMenu(){
@@ -82,5 +85,21 @@ class ListWorkout : Fragment() {
         fragmentTrans.add(R.id.layout_main_activity, detailWorkout)
         fragmentTrans.addToBackStack(null)
         fragmentTrans.commit()
+    }
+    private fun searchWorkout(){
+        viewBinding.searchBar.addTextChangedListener(object : TextWatcher{
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                adapterListWorkout.getFilter().filter(p0)
+                adapterListWorkout.notifyDataSetChanged()
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+
+            }
+        })
     }
 }

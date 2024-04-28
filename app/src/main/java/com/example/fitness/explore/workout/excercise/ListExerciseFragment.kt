@@ -2,6 +2,8 @@ package com.example.fitness.explore.workout.excercise
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,6 +34,7 @@ class ListExerciseFragment : Fragment() {
         viewBinding.btCancel.setOnClickListener {
             backToMenu()
         }
+        searchExercise()
         return viewBinding.root
     }
 
@@ -94,5 +97,21 @@ class ListExerciseFragment : Fragment() {
         if(bundle != null){
             this.type = bundle["bodyPart"] as String
         }
+    }
+    private fun searchExercise(){
+        viewBinding.searchBar.addTextChangedListener(object : TextWatcher{
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                adapterListExercise.getFilter().filter(p0.toString())
+                adapterListExercise.notifyDataSetChanged()
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+
+            }
+        })
     }
 }

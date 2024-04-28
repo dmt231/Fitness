@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide
 import com.example.fitness.R
 import com.example.fitness.adapter_recyclerView.adapter_excercise.AdapterListExerciseInWorkout
 import com.example.fitness.databinding.LayoutDetailWorkoutBinding
+import com.example.fitness.explore.workout.excercise.DetailExercise
 import com.example.fitness.model.Exercise
 import com.example.fitness.model.Workout
 import com.example.fitness.repository.ExerciseRepository
@@ -152,9 +153,17 @@ class DetailWorkout : Fragment() {
         adapter = AdapterListExerciseInWorkout(
             workout.listExercise!!,
             object : AdapterListExerciseInWorkout.OnClickListenerExerciseInWorkout {
-                override fun onClickListener(exercise: Exercise) {
-
+                override fun onClickListener(idExercise: String) {
+                    val detailExercise = DetailExercise()
+                    val fragmentTrans = requireActivity().supportFragmentManager.beginTransaction()
+                    val bundle = Bundle()
+                    bundle.putString("idExercise", idExercise)
+                    detailExercise.arguments = bundle
+                    fragmentTrans.add(R.id.layout_main_activity, detailExercise)
+                    fragmentTrans.addToBackStack(detailExercise.tag)
+                    fragmentTrans.commit()
                 }
+
             })
         viewBinding.recyclerViewListExercise.adapter = adapter
     }

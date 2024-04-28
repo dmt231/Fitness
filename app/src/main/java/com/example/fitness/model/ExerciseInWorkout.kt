@@ -4,9 +4,10 @@ class ExerciseInWorkout(id: String?, setRep : String?) {
     private var idExcercice: String? = null
     private var setRep : String? = null
     private var image : String? = null
-    private var isChecked : Boolean? = null
+    private var isChecked : Boolean = false
     private var name : String? = null
     private var rep : String? = null
+
     init {
         this.idExcercice = id
         this.setRep = setRep
@@ -29,7 +30,7 @@ class ExerciseInWorkout(id: String?, setRep : String?) {
     fun getImage() : String?{
         return image;
     }
-    fun getChecked() : Boolean?{
+    fun getChecked() : Boolean{
         return isChecked;
     }
     fun getName() : String?{
