@@ -2,6 +2,8 @@ package com.example.fitness.explore.workout
 
 import android.annotation.SuppressLint
 import android.app.Dialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.Handler
@@ -18,12 +20,18 @@ import com.example.fitness.databinding.LayoutStartWorkoutBinding
 import com.example.fitness.model.ExerciseInWorkout
 import com.example.fitness.model.Workout
 import android.media.MediaPlayer
+import com.example.fitness.databinding.LayoutDialogEndWorkoutBinding
+import com.example.fitness.model.History
+import com.example.fitness.repository.UserRepository
+import com.example.fitness.storage.Preferences
+import java.text.SimpleDateFormat
 import java.util.*
 
 class StartWorkout : Fragment() {
     private lateinit var viewBinding: LayoutStartWorkoutBinding
     private var adapter: AdapterExerciseInStartWorkout? = null
     private var listExercise: ArrayList<ExerciseInWorkout> = ArrayList()
+    private var userRepository: UserRepository? = null
     private lateinit var workout: Workout
     private lateinit var handler: Handler
     private var seconds = 0
@@ -48,12 +56,13 @@ class StartWorkout : Fragment() {
             onFinishWorkout()
         }
         viewBinding.btnCancel.setOnClickListener {
-            requireActivity().supportFragmentManager.popBackStack()
+            openDialogConfirm()
         }
         viewBinding.btnSetRestTime.setOnClickListener {
             setUpCountDownTime()
         }
         handler = Handler()
+        userRepository = UserRepository()
         getDataWorkout()
         setUpData()
         setUpRecyclerView()
@@ -61,6 +70,29 @@ class StartWorkout : Fragment() {
         setUpMinuteSecondRest()
         return viewBinding.root
     }
+
+    private fun openDialogConfirm() {
+        val dialog = Dialog(requireContext())
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        val binding = LayoutDialogEndWorkoutBinding.inflate(dialog.layoutInflater)
+        dialog.setContentView(binding.root)
+        dialog.setCancelable(false)
+        dialog.window?.setLayout(
+            WindowManager.LayoutParams.WRAP_CONTENT,
+            WindowManager.LayoutParams.WRAP_CONTENT
+        )
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        binding.btnNo.setOnClickListener {
+            dialog.cancel()
+        }
+        binding.btnYes.setOnClickListener {
+            requireActivity().supportFragmentManager.popBackStack()
+            dialog.cancel()
+        }
+        dialog.show()
+
+    }
+
 
     private fun setUpCountDownTime() {
         val dialog = Dialog(requireContext())
@@ -89,7 +121,8 @@ class StartWorkout : Fragment() {
             val minuteValue = minutePicker.value
             val secondValue = secondPicker.value
             timeStart = minuteValue * 60 * 1000 + secondValue * 1000
-            timeLeft =timeStart
+            timeLeft = timeStart
+            timeProgress = 0
             setUpMinuteSecondRest()
             dialog.dismiss()
         }
@@ -106,6 +139,48 @@ class StartWorkout : Fragment() {
         }
         percentage = (numberFinish / listExercise.size.toFloat()) * 100F
         val percentageString = String.format(Locale.getDefault(), "%.2f", percentage)
+        val calendarToday = Calendar.getInstance()
+        val year = calendarToday.get(Calendar.YEAR)
+        val month = calendarToday.get(Calendar.MONTH)
+        val day = calendarToday.get(Calendar.DAY_OF_MONTH)
+
+        handler.removeCallbacksAndMessages(null)
+
+        val selectedDate = Calendar.getInstance()
+        selectedDate.set(year, month, day)
+        val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+        val dateResult = sdf.format(selectedDate.time)
+
+        val userId = Preferences(requireContext()).getUserIdValues()
+
+        userRepository?.createHistoryForUser(
+            userId,
+            workout.name,
+            dateResult,
+            percentageString,
+            viewBinding.Time.text.toString()
+        )
+
+        changeToFinishWorkout(
+            History(
+                userId!!,
+                workout.name!!,
+                dateResult,
+                percentageString,
+                viewBinding.Time.text.toString()
+            )
+        )
+    }
+
+    private fun changeToFinishWorkout(history: History) {
+        val finishWorkoutFragment = FinishWorkout()
+        val fragmentTrans = requireActivity().supportFragmentManager.beginTransaction()
+        val bundle = Bundle()
+        bundle.putSerializable("History", history)
+        finishWorkoutFragment.arguments = bundle
+        fragmentTrans.replace(R.id.layout_main_activity, finishWorkoutFragment)
+        fragmentTrans.addToBackStack(finishWorkoutFragment.tag)
+        fragmentTrans.commit()
     }
 
     private fun startCheckTimeWorkout() {
@@ -139,33 +214,47 @@ class StartWorkout : Fragment() {
     @SuppressLint("NotifyDataSetChanged")
     private fun handleListExercise() {
         val listResult = workout.listExercise
-        if (listResult != null) {
-            for (exercise in listResult) {
-                val setRep = exercise.getSetRep()
-                Log.d("SetRep", setRep.toString())
-                if (setRep != null) {
-                    if (!setRep.contains("Minutes") && !setRep.contains("Second") && !setRep.contains(
-                            "Hour"
-                        )
-                    ) {
-                        val splitSetRep = setRep.split(" ")
-                        val set = splitSetRep[0].toInt()
-                        val rep = splitSetRep[3].toInt()
-                        for (i in 0 until set) {
-                            val newExercise =
-                                ExerciseInWorkout(exercise.getIdExercise(), exercise.getSetRep())
-                            newExercise.setImage(exercise.getImage().toString())
-                            newExercise.setRep(rep.toString())
-                            newExercise.setName(exercise.getName().toString())
-                            listExercise.add(newExercise)
+        val repeat = workout.repeat
+        if (repeat != null) {
+            for (index in 0 until repeat) {
+                if (listResult != null) {
+                    for (exercise in listResult) {
+                        val setRep = exercise.getSetRep()
+                        if (setRep != null) {
+                            if (!setRep.contains("Minutes") && !setRep.contains("Second") && !setRep.contains(
+                                    "Hour"
+                                )
+                            ) {
+                                val splitSetRep = setRep.split(" ")
+                                val set = splitSetRep[0].toInt()
+                                val rep = splitSetRep[3].toInt()
+                                for (i in 0 until set) {
+                                    val newExercise =
+                                        ExerciseInWorkout(
+                                            exercise.getIdExercise(),
+                                            exercise.getSetRep()
+                                        )
+                                    newExercise.setImage(exercise.getImage().toString())
+                                    newExercise.setRep(rep.toString())
+                                    newExercise.setName(exercise.getName().toString())
+                                    listExercise.add(newExercise)
+                                }
+                            } else {
+                                val newExercise = ExerciseInWorkout(
+                                        exercise.getIdExercise(),
+                                        exercise.getSetRep()
+                                    )
+                                newExercise.setImage(exercise.getImage().toString())
+                                newExercise.setRep(setRep.toString())
+                                newExercise.setName(exercise.getName().toString())
+                                listExercise.add(newExercise)
+                            }
                         }
-                    } else {
-                        listExercise.add(exercise)
                     }
                 }
             }
-            adapter?.notifyDataSetChanged()
         }
+        adapter?.notifyDataSetChanged()
     }
 
 
@@ -175,6 +264,11 @@ class StartWorkout : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
+        handler.removeCallbacksAndMessages(null)
+    }
+
+    override fun onStop() {
+        super.onStop()
         handler.removeCallbacksAndMessages(null)
     }
 
@@ -231,6 +325,7 @@ class StartWorkout : Fragment() {
         binding.btnSkip.setOnClickListener {
             timeCountDown?.cancel()
             timeLeft = timeStart
+            timeProgress = 0
             dialog.dismiss()
 
         }

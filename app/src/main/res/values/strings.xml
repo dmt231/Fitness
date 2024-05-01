@@ -73,4 +73,15 @@
     <string name="ho_n_t_t">Hoàn Tất</string>
     <string name="h_y">HỦY</string>
     <string name="skip">Bỏ Qua</string>
+    <string name="h_y_b_t_p_luy_n">Hủy Bỏ Tập Luyện</string>
+    <string name="b_n_c_ch_c_ch_n_mu_n_h_y_bu_i_t_p_to_n_b_qu_tr_nh_s_b_m_t">Bạn có chắc chắn muốn hủy buổi tập ? Toàn bộ quá trình sẽ bị mất</string>
+    <string name="No">Không</string>
+    <string name="c">Có</string>
+    <string name="congratulation">Chúc Mừng Bạn Đã Hoàn Thành Buổi Tập ! </string>
+    <string name="workout">Buổi Tập</string>
+    <string name="personal_best">Kỷ Lục Cá Nhân</string>
+    <string name="deadlift">Deadlift</string>
+    <string name="squat">Squat</string>
+    <string name="benchPress">Bench Press</string>
+    <string name="history">Lịch Sử Tập Luyện</string>
 </resources>

@@ -32,6 +32,7 @@
                 android:layout_width="@dimen/_80sdp"
                 android:layout_height="@dimen/_80sdp"
                 app:cardCornerRadius="15dp"
+                android:layout_margin="@dimen/_10sdp"
                 app:cardElevation="8dp">
 
                 <ImageView
@@ -56,7 +57,7 @@
                 android:layout_width="@dimen/_80sdp"
                 android:layout_height="@dimen/_80sdp"
                 app:cardCornerRadius="15dp"
-                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_margin="@dimen/_10sdp"
                 app:cardElevation="8dp">
 
                 <ImageView
@@ -81,7 +82,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/_15sdp"
             android:orientation="horizontal">
 
             <androidx.cardview.widget.CardView
@@ -89,6 +89,7 @@
                 android:layout_width="@dimen/_80sdp"
                 android:layout_height="@dimen/_80sdp"
                 app:cardCornerRadius="15dp"
+                android:layout_margin="@dimen/_10sdp"
                 app:cardElevation="8dp">
 
                 <ImageView
@@ -113,7 +114,7 @@
                 android:layout_width="@dimen/_80sdp"
                 android:layout_height="@dimen/_80sdp"
                 app:cardCornerRadius="15dp"
-                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_margin="@dimen/_10sdp"
                 app:cardElevation="8dp">
 
                 <ImageView
@@ -138,13 +139,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/_15sdp"
             android:orientation="horizontal">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/Shoulder"
                 android:layout_width="@dimen/_80sdp"
                 android:layout_height="@dimen/_80sdp"
+                android:layout_margin="@dimen/_10sdp"
                 app:cardCornerRadius="15dp"
                 app:cardElevation="8dp">
 
@@ -170,7 +171,7 @@
                 android:layout_width="@dimen/_80sdp"
                 android:layout_height="@dimen/_80sdp"
                 app:cardCornerRadius="15dp"
-                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_margin="@dimen/_10sdp"
                 app:cardElevation="8dp">
 
                 <ImageView
@@ -195,7 +196,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/_15sdp"
             android:orientation="horizontal">
 
             <androidx.cardview.widget.CardView
@@ -203,6 +203,7 @@
                 android:layout_width="@dimen/_80sdp"
                 android:layout_height="@dimen/_80sdp"
                 app:cardCornerRadius="15dp"
+                android:layout_margin="@dimen/_10sdp"
                 app:cardElevation="8dp">
 
                 <ImageView
@@ -227,7 +228,7 @@
                 android:layout_width="@dimen/_80sdp"
                 android:layout_height="@dimen/_80sdp"
                 app:cardCornerRadius="15dp"
-                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_margin="@dimen/_10sdp"
                 app:cardElevation="8dp">
 
                 <ImageView
@@ -252,7 +253,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/_15sdp"
             android:orientation="horizontal">
 
             <androidx.cardview.widget.CardView
@@ -260,6 +260,7 @@
                 android:layout_width="@dimen/_80sdp"
                 android:layout_height="@dimen/_80sdp"
                 app:cardCornerRadius="15dp"
+                android:layout_margin="@dimen/_10sdp"
                 app:cardElevation="8dp">
 
                 <ImageView
@@ -284,7 +285,7 @@
                 android:layout_width="@dimen/_80sdp"
                 android:layout_height="@dimen/_80sdp"
                 app:cardCornerRadius="15dp"
-                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_margin="@dimen/_10sdp"
                 app:cardElevation="8dp">
 
                 <ImageView
@@ -309,13 +310,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/_15sdp"
             android:orientation="horizontal">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/fullBody"
                 android:layout_width="@dimen/_80sdp"
                 android:layout_height="@dimen/_80sdp"
+                android:layout_margin="@dimen/_10sdp"
                 app:cardCornerRadius="15dp"
                 app:cardElevation="8dp">
 

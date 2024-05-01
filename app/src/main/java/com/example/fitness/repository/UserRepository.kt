@@ -115,4 +115,20 @@ class UserRepository {
                 Log.d("Status Update : ", "Success")
             }
     }
+    fun createHistoryForUser(userId : String?, idWorkout : String?, date : String?, percentage : String?, duration : String?){
+        val collectionRef = fireStore.collection("History")
+        val hashMap: MutableMap<String, Any> = HashMap()
+        hashMap["idUser"] = userId!!
+        hashMap["workout"] = idWorkout!!
+        hashMap["date"] = date!!
+        hashMap["percentage"] = percentage!!
+        hashMap["duration"] = duration!!
+        collectionRef.document().set(hashMap).addOnCompleteListener {
+            if (it.isSuccessful) {
+                Log.d("Status Create : ", "Success")
+            } else {
+                Log.d("Status Create : ", "Failed")
+            }
+        }
+    }
 }

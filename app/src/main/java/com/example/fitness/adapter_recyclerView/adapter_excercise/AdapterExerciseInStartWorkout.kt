@@ -42,12 +42,16 @@ class AdapterExerciseInStartWorkout(listExerciseInWorkout: ArrayList<ExerciseInW
             .load(exerciseModel.getImage())
             .into(holder.viewBinding.imagesCustomList)
         holder.viewBinding.nameExercise.text = exerciseModel.getName()
-        if (!exerciseModel.getRep()!!.contains("Minutes") && !exerciseModel.getRep()!!
-                .contains("Second") && !exerciseModel.getRep()!!.contains("Hour")
-        ) {
-            holder.viewBinding.rep.text = exerciseModel.getRep() + " Rep"
-        } else {
-            holder.viewBinding.rep.text = exerciseModel.getRep()
+        if(exerciseModel.getRep() != null) {
+            if (!exerciseModel.getRep()!!.contains("Minutes") && !exerciseModel.getRep()!!
+                    .contains("Second") && !exerciseModel.getRep()!!.contains("Hour")
+            ) {
+                holder.viewBinding.rep.text = exerciseModel.getRep() + " Rep"
+            } else {
+                holder.viewBinding.rep.text = exerciseModel.getRep()
+            }
+        }else{
+            holder.viewBinding.rep.text = exerciseModel.getSetRep()
         }
         holder.viewBinding.checkBox.isChecked = exerciseModel.getChecked()
         holder.viewBinding.checkBox.setOnClickListener {
