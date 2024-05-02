@@ -84,4 +84,7 @@
     <string name="squat">Squat</string>
     <string name="benchPress">Bench Press</string>
     <string name="history">Lịch Sử Tập Luyện</string>
+    <string name="c_p_nh_t_k_l_c_c_a_b_n">Cập nhật kỷ lục của bạn</string>
+    <string name="update">Cập Nhật</string>
+    <string name="cancel">Hủy Bỏ</string>
 </resources>

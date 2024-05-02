@@ -26,6 +26,7 @@ import com.example.fitness.repository.UserRepository
 import com.example.fitness.storage.Preferences
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 class StartWorkout : Fragment() {
     private lateinit var viewBinding: LayoutStartWorkoutBinding
@@ -207,56 +208,66 @@ class StartWorkout : Fragment() {
         val bundle = arguments
         if (bundle != null) {
             workout = bundle["workout"] as Workout
+            for (exercise in workout.listExercise!!) {
+                Log.d("Name Exercise", exercise.getName().toString())
+            }
         }
-        handleListExercise()
+        handleRepeatListExercise()
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    private fun handleListExercise() {
+    private fun handleRepeatListExercise() {
         val listResult = workout.listExercise
         val repeat = workout.repeat
-        if (repeat != null) {
-            for (index in 0 until repeat) {
-                if (listResult != null) {
-                    for (exercise in listResult) {
-                        val setRep = exercise.getSetRep()
-                        if (setRep != null) {
-                            if (!setRep.contains("Minutes") && !setRep.contains("Second") && !setRep.contains(
-                                    "Hour"
-                                )
-                            ) {
-                                val splitSetRep = setRep.split(" ")
-                                val set = splitSetRep[0].toInt()
-                                val rep = splitSetRep[3].toInt()
-                                for (i in 0 until set) {
-                                    val newExercise =
-                                        ExerciseInWorkout(
-                                            exercise.getIdExercise(),
-                                            exercise.getSetRep()
-                                        )
-                                    newExercise.setImage(exercise.getImage().toString())
-                                    newExercise.setRep(rep.toString())
-                                    newExercise.setName(exercise.getName().toString())
-                                    listExercise.add(newExercise)
-                                }
-                            } else {
-                                val newExercise = ExerciseInWorkout(
-                                        exercise.getIdExercise(),
-                                        exercise.getSetRep()
-                                    )
-                                newExercise.setImage(exercise.getImage().toString())
-                                newExercise.setRep(setRep.toString())
-                                newExercise.setName(exercise.getName().toString())
-                                listExercise.add(newExercise)
-                            }
-                        }
+        if (listResult != null) {
+            if (repeat != null) {
+                if (repeat != 0) {
+                    for (index in 0 until repeat.toInt()) {
+                        handleExercise(listResult)
+                        adapter?.notifyDataSetChanged()
                     }
+                } else {
+                    handleExercise(listResult)
                 }
             }
         }
-        adapter?.notifyDataSetChanged()
     }
 
+    private fun handleExercise(data: ArrayList<ExerciseInWorkout>) {
+        for (exercise in data) {
+            val setRep = exercise.getSetRep()
+            if (setRep != null) {
+                if (!setRep.contains("Minutes") && !setRep.contains("Second") && !setRep.contains(
+                        "Hour"
+                    )
+                ) {
+                    val splitSetRep = setRep.split(" ")
+                    val set = splitSetRep[0].toInt()
+                    val rep = splitSetRep[3].toInt()
+                    for (i in 0 until set) {
+                        val newExercise =
+                            ExerciseInWorkout(
+                                exercise.getIdExercise(),
+                                exercise.getSetRep()
+                            )
+                        newExercise.setImage(exercise.getImage().toString())
+                        newExercise.setRep(rep.toString())
+                        newExercise.setName(exercise.getName().toString())
+                        listExercise.add(newExercise)
+                    }
+                } else {
+                    val newExercise = ExerciseInWorkout(
+                        exercise.getIdExercise(),
+                        exercise.getSetRep()
+                    )
+                    newExercise.setImage(exercise.getImage().toString())
+                    newExercise.setRep(setRep.toString())
+                    newExercise.setName(exercise.getName().toString())
+                    listExercise.add(newExercise)
+                }
+            }
+        }
+    }
 
     private fun setUpData() {
         viewBinding.nameWorkout.text = workout.name

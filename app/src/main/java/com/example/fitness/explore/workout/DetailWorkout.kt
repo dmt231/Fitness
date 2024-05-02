@@ -38,6 +38,9 @@ class DetailWorkout : Fragment() {
         viewBinding.linearLayoutMain.setOnClickListener {
 
         }
+        viewBinding.btnStartWorkout.setOnClickListener {
+            onChangeToStartWorkout(workout)
+        }
         setUpRecyclerView()
         getExerciseDataInWorkout()
         return viewBinding.root
@@ -75,9 +78,6 @@ class DetailWorkout : Fragment() {
         }
         viewBinding.txtDescription.text = workout.overview
         viewBinding.txtEquipment.text = handleEquipmentData(workout.equipment!!)
-        viewBinding.btnStartWorkout.setOnClickListener {
-            onChangeToFinishWorkout(workout)
-        }
         handleRepeat()
     }
 
@@ -168,14 +168,14 @@ class DetailWorkout : Fragment() {
         viewBinding.recyclerViewListExercise.adapter = adapter
     }
 
-    private fun onChangeToFinishWorkout(workout: Workout) {
+    private fun onChangeToStartWorkout(workout: Workout) {
         val startWorkout = StartWorkout()
         val fragmentTrans = requireActivity().supportFragmentManager.beginTransaction()
         val bundle = Bundle()
         bundle.putSerializable("workout", workout)
         startWorkout.arguments = bundle
-        fragmentTrans.add(R.id.layout_main_activity, startWorkout)
-        fragmentTrans.addToBackStack(null)
+        fragmentTrans.replace(R.id.layout_main_activity, startWorkout)
+        fragmentTrans.addToBackStack(startWorkout.tag)
         fragmentTrans.commit()
     }
 }

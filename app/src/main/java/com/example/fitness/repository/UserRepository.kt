@@ -3,12 +3,22 @@ package com.example.fitness.repository
 import android.app.Activity
 import android.util.Log
 import android.widget.Toast
+import androidx.lifecycle.MutableLiveData
+import com.example.fitness.model.Exercise
+import com.example.fitness.model.History
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
 class UserRepository {
     private val auth = FirebaseAuth.getInstance()
     private val fireStore = FirebaseFirestore.getInstance()
+
+    private val historyWorkoutLiveData: MutableLiveData<ArrayList<History>> =
+        MutableLiveData<ArrayList<History>>()
+
+    fun getHistoryLiveData(): MutableLiveData<ArrayList<History>> {
+        return historyWorkoutLiveData
+    }
 
     //Register User
     fun createAuthUser(
@@ -130,5 +140,50 @@ class UserRepository {
                 Log.d("Status Create : ", "Failed")
             }
         }
+    }
+    fun getHistoryForUser(userId : String?){
+        val collectionRef = fireStore.collection("History")
+        collectionRef.whereEqualTo("idUser", userId)
+            .get()
+            .addOnCompleteListener {
+                if(it.isSuccessful){
+                    val listHistory: ArrayList<History> = ArrayList()
+                    for(history in it.result){
+                        val workoutResult = history.getString("workout")
+                        val date = history.getString("date")
+                        val duration = history.getString("duration")
+                        val percentage = history.getString("percentage")
+                        val historyModel = History(userId!!, workoutResult!!, date!!, percentage!!,duration!!)
+                        listHistory.add(historyModel)
+                    }
+                    historyWorkoutLiveData.value = listHistory
+                }else{
+                    Log.d("Error", it.exception.toString())
+                }
+            }
+    }
+    fun updateRecordValue(userId: String, value: String, type : String){
+        val documentRef = fireStore.collection("User").document(userId)
+        when(type){
+            "deadlift" ->{documentRef.update("deadlift", value)}
+            "squat" ->{documentRef.update("squat", value)}
+            "benchPress"->{documentRef.update("bench press", value)}
+        }
+    }
+    fun getRecordForUser(userId: String, getRecord : GetRecord){
+        val collectionRef = fireStore.collection("User")
+        collectionRef.document(userId)
+            .get()
+            .addOnCompleteListener {
+                if(it.isSuccessful){
+                    val deadLift = it.result.getString("deadlift")
+                    val squat = it.result.getString("squat")
+                    val benchPress = it.result.getString("bench press")
+                    getRecord.onReturnValue(deadLift!!, squat!!, benchPress!!)
+                }
+            }
+    }
+    interface GetRecord{
+        fun onReturnValue(deadlift : String, squat : String, benchPress : String)
     }
 }
