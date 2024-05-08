@@ -87,4 +87,23 @@
     <string name="c_p_nh_t_k_l_c_c_a_b_n">Cập nhật kỷ lục của bạn</string>
     <string name="update">Cập Nhật</string>
     <string name="cancel">Hủy Bỏ</string>
+    <string name="chi_ti_t_l_ch_t_p">Chi Tiết Lịch Tập</string>
+    <string name="t_o_bu_i_t_p">Tạo Buổi Tập</string>
+    <string name="enter_workout_name">Điền Tên Buổi Tập Của Bạn</string>
+    <string name="add_exercise">Thêm Bài Tập Vào Buổi Tập</string>
+    <string name="add_exercise_in_workout">Thêm Bài Tập</string>
+    <string name="detail_exercise">Chi Tiết Bài Tập</string>
+    <string name="theo_s_set_rep"><![CDATA[Theo Số Set]]></string>
+    <string name="by_time">Theo Thời Gian</string>
+    <string name="number_set">Số Set</string>
+    <string name="set">set</string>
+    <string name="number_rep">Số Rep</string>
+    <string name="rep">rep</string>
+    <string name="second">giây</string>
+    <string name="number_second">Số Giây</string>
+    <string name="minutes">phút</string>
+    <string name="number_minutes">Số Phút</string>
+    <string name="list_exercise">Danh Sách Bài Tập</string>
+    <string name="save_workout">Lưu Buổi Tập</string>
+    <string name="save">Lưu</string>
 </resources>

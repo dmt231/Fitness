@@ -218,50 +218,51 @@ class StartWorkout : Fragment() {
     @SuppressLint("NotifyDataSetChanged")
     private fun handleRepeatListExercise() {
         val listResult = workout.listExercise
-        val repeat = workout.repeat
+        val repeat = workout.repeat  //For get the repeat in each workout
         if (listResult != null) {
             if (repeat != null) {
-                if (repeat != 0) {
+                if (repeat != 0) {  //If we have repeat, we can handle that how many times does the workout will be looped
                     for (index in 0 until repeat.toInt()) {
                         handleExercise(listResult)
                         adapter?.notifyDataSetChanged()
                     }
-                } else {
+                } else {  //If repeat is 0, we don't need to repeat the handleExercise
                     handleExercise(listResult)
                 }
+            }else{ //If repeat is null, we don't need to repeat the handleExercise as the case 0
+                handleExercise(listResult)
             }
         }
     }
 
     private fun handleExercise(data: ArrayList<ExerciseInWorkout>) {
         for (exercise in data) {
-            val setRep = exercise.getSetRep()
-            if (setRep != null) {
-                if (!setRep.contains("Minutes") && !setRep.contains("Second") && !setRep.contains(
+            val setAndRep = exercise.getSetAndRep()
+            if (setAndRep != null) {
+                if (!setAndRep.contains("Minutes") && !setAndRep.contains("Second") && !setAndRep.contains(
                         "Hour"
                     )
                 ) {
-                    val splitSetRep = setRep.split(" ")
+                    val splitSetRep = setAndRep.split(" ")
                     val set = splitSetRep[0].toInt()
                     val rep = splitSetRep[3].toInt()
                     for (i in 0 until set) {
                         val newExercise =
                             ExerciseInWorkout(
                                 exercise.getIdExercise(),
-                                exercise.getSetRep()
+                                setAndRep
                             )
                         newExercise.setImage(exercise.getImage().toString())
-                        newExercise.setRep(rep.toString())
+                        newExercise.setUpRep(rep.toString())
                         newExercise.setName(exercise.getName().toString())
                         listExercise.add(newExercise)
                     }
                 } else {
                     val newExercise = ExerciseInWorkout(
                         exercise.getIdExercise(),
-                        exercise.getSetRep()
+                        setAndRep
                     )
                     newExercise.setImage(exercise.getImage().toString())
-                    newExercise.setRep(setRep.toString())
                     newExercise.setName(exercise.getName().toString())
                     listExercise.add(newExercise)
                 }

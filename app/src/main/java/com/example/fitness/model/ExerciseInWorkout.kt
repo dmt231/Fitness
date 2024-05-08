@@ -1,6 +1,6 @@
 package com.example.fitness.model
 
-class ExerciseInWorkout(id: String?, setRep : String?) {
+class ExerciseInWorkout(id: String?, setRep : String?) : java.io.Serializable{
     private var idExcercice: String? = null
     private var setRep : String? = null
     private var image : String? = null
@@ -15,7 +15,7 @@ class ExerciseInWorkout(id: String?, setRep : String?) {
     fun getIdExercise() : String?{
         return idExcercice;
     }
-    fun getSetRep() : String?{
+    fun getSetAndRep() : String?{
         return setRep;
     }
     fun setImage(image : String){
@@ -36,10 +36,13 @@ class ExerciseInWorkout(id: String?, setRep : String?) {
     fun getName() : String?{
         return name;
     }
-    fun setRep(rep : String){
+    fun setUpRep(rep : String){
         this.rep = rep
     }
     fun getRep() : String?{
         return rep;
+    }
+    fun updateSetAndRep(setAndRep : String){
+        this.setRep = setAndRep
     }
 }

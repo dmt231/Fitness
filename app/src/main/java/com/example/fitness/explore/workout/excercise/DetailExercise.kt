@@ -86,6 +86,5 @@ class DetailExercise : Fragment() {
     }
     private fun resignedExercise(exercise : Exercise){
         this.exercise = exercise
-        Log.d("Exercise:", exercise.getName().toString())
     }
 }

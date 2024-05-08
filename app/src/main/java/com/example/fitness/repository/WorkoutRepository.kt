@@ -2,7 +2,6 @@ package com.example.fitness.repository
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import com.example.fitness.model.Exercise
 import com.example.fitness.model.ExerciseInWorkout
 import com.example.fitness.model.Workout
 import com.google.firebase.firestore.FirebaseFirestore
@@ -16,6 +15,22 @@ class WorkoutRepository {
     fun getWorkoutLiveData(): MutableLiveData<ArrayList<Workout>> {
         return workoutLiveData
     }
+    fun createWorkoutByUser(userId: String, workout : Workout, addSuccessListener: AddSuccessListener){
+        val collectionRef = fireStore.collection("Workout")
+        val hashMap: MutableMap<String, Any> = HashMap()
+        hashMap["IdWorkout"] = "Id${workout.id.toString()}"
+        hashMap["Name"] = workout.name.toString()
+        hashMap["ListOfExcercice"] = workout.listExercise!!
+        hashMap["author"] = userId
+        collectionRef.document(workout.id!! + " " +userId).set(hashMap).addOnCompleteListener {
+            if (it.isSuccessful) {
+                addSuccessListener.addSuccessListener()
+            } else {
+                Log.d("Status", "Failed")
+            }
+        }
+    }
+
 
     fun getWorkoutByType(type: String) {
         fireStore.collection("Workout")
@@ -277,5 +292,110 @@ class WorkoutRepository {
                     Log.d("Error", it.exception.toString())
                 }
             }
+    }
+    fun getWorkoutByDocumentId(workoutDocument : String, onCompleteListener: OnCompleteListener){
+        fireStore.collection("Workout")
+            .document(workoutDocument)
+            .get()
+            .addOnCompleteListener {
+                if(it.isSuccessful){
+                    val workout = it.result
+                    if(workout.exists()){
+                        val id = workout.getString("IdWorkout")
+                        val difficulty = workout.getString("Difficulty")
+                        val equipment = workout.getString("Equipement")
+                        val name = workout.getString("Name")
+                        val overview = workout.getString("Overview")
+                        val typeWorkout = workout.getString("Type")
+                        val bodyPart = workout.getString("BodyPart")
+                        val repeat = workout.get("Repeat", Int::class.java)
+                        val time = workout.get("Time", Int::class.java)
+                        val imgCovered = workout.getString("imgCovered")
+                        val listExercise: List<Map<String, Any>> =
+                            workout.get("ListOfExcercice") as List<Map<String, Any>>
+
+                        val listExerciseInWorkout = ArrayList<ExerciseInWorkout>()
+                        for (map in listExercise) {
+                            val idExercise = map["idExcercice"] as String
+                            val setRep = map["setRep"] as String
+                            val exerciseInWorkout = ExerciseInWorkout(idExercise, setRep)
+                            listExerciseInWorkout.add(exerciseInWorkout)
+                        }
+                        val workoutModel = Workout(
+                            id,
+                            difficulty,
+                            equipment,
+                            overview,
+                            name,
+                            bodyPart,
+                            typeWorkout,
+                            imgCovered,
+                            time,
+                            repeat,
+                            listExerciseInWorkout
+                        )
+                        onCompleteListener.onCompleteListener(workoutModel)
+                    }
+                }
+            }
+    }
+    fun getWorkoutByUser(userId : String, queryListWorkout: QueryListWorkout ){
+        fireStore.collection("Workout")
+            .whereEqualTo("author", userId)
+            .get()
+            .addOnCompleteListener {
+                if(it.isSuccessful){
+                    val listWorkout = ArrayList<Workout>()
+                    if(!it.result.isEmpty){
+                        for(workout in it.result){
+                            val name = workout.getString("Name")
+                            val listExercise: List<Map<String, Any>> =
+                                workout.get("ListOfExcercice") as List<Map<String, Any>>
+
+                            val listExerciseInWorkout = ArrayList<ExerciseInWorkout>()
+
+                                for (map in listExercise) {
+
+                                    val idExercise = map["idExercise"] as String
+                                    val setRep = map["setAndRep"] as String
+                                    val image = map["image"] as String
+                                    val nameExercise = map["name"] as String
+                                    val exerciseInWorkout = ExerciseInWorkout(idExercise, setRep)
+                                    exerciseInWorkout.setImage(image)
+                                    exerciseInWorkout.setName(nameExercise)
+                                    listExerciseInWorkout.add(exerciseInWorkout)
+                                }
+                            val workoutModel = Workout(
+                                null,
+                                null,
+                                null,
+                                null,
+                                name,
+                                null,
+                                null,
+                                null,
+                                null,
+                                null,
+                                listExerciseInWorkout
+                            )
+                            listWorkout.add(workoutModel)
+                        }
+                        queryListWorkout.onFoundListWorkoutListener(listWorkout)
+                    }else{
+                        queryListWorkout.onNotFoundListener()
+                    }
+                }
+            }
+    }
+
+    interface OnCompleteListener {
+        fun onCompleteListener(workout: Workout)
+    }
+    interface QueryListWorkout{
+        fun onNotFoundListener()
+        fun onFoundListWorkoutListener(listWorkout : ArrayList<Workout>)
+    }
+    interface AddSuccessListener{
+        fun addSuccessListener()
     }
 }

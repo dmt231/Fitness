@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.fitness.R
+import com.example.fitness.create.CreateFragment
 import com.example.fitness.databinding.LayoutMainFragmentBinding
 import com.example.fitness.explore.ExploreFragment
 import com.example.fitness.progress.ProgressFragment
@@ -33,6 +34,9 @@ class MainFragment : Fragment() {
             }else if(type == "Progress"){
                 changedToProgress()
                 viewBinding.bottomBar.menu.findItem(R.id.progress).isChecked = true
+            }else if(type == "Create"){
+                changedToCreate()
+                viewBinding.bottomBar.menu.findItem(R.id.create).isChecked = true
             }
         }
     }
@@ -60,8 +64,19 @@ class MainFragment : Fragment() {
                     changedToProgress()
                     viewBinding.bottomBar.menu.findItem(R.id.progress).isChecked=true
                 }
+                R.id.create ->{
+                    changedToCreate()
+                    viewBinding.bottomBar.menu.findItem(R.id.create).isChecked = true
+                }
             }
             false
         }
+    }
+
+    private fun changedToCreate() {
+        val createFragment = CreateFragment()
+        val fragmentTrans = requireActivity().supportFragmentManager.beginTransaction()
+        fragmentTrans.replace(R.id.mainLayout, createFragment)
+        fragmentTrans.commit()
     }
 }

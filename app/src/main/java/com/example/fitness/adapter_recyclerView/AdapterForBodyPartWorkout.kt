@@ -33,7 +33,7 @@ class AdapterForBodyPartWorkout(listBodyPart: ArrayList<String>, onClickListener
     override fun onBindViewHolder(holder: ViewHolderBodyPartWorkout, position: Int) {
         val type = listOfBodyPart[position]
         holder.viewBinding.txtBodyPart.text = type
-        holder.viewBinding.txtBodyPart.setOnClickListener {
+        holder.viewBinding.cardViewBodyPart.setOnClickListener {
             when (type) {
                 "Tay" -> {
                     onClickListener.onClickListener("Arm", type)

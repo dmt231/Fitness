@@ -73,11 +73,9 @@ class SetUpGenderFragment : Fragment() {
     private fun onSelectedGender(){
         if(viewBinding.radioFemale.isChecked){
             gender = requireContext().getString(R.string.female)
-            Log.d("gender : ", gender!!)
         }
         else if(viewBinding.radioMale.isChecked){
             gender = requireContext().getString(R.string.nam)
-            Log.d("gender : ", gender!!)
         }
     }
 }

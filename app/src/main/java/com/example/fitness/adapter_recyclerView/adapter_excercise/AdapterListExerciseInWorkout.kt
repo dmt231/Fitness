@@ -6,9 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.fitness.databinding.LayoutListExerciseInWorkoutBinding
-import com.example.fitness.model.Exercise
 import com.example.fitness.model.ExerciseInWorkout
-import com.example.fitness.model.Workout
 
 class AdapterListExerciseInWorkout(listExercise: ArrayList<ExerciseInWorkout> , onClick : OnClickListenerExerciseInWorkout) : RecyclerView.Adapter<ViewHolderListExerciseInWorkout>() {
     private var listExercise: ArrayList<ExerciseInWorkout>
@@ -29,11 +27,13 @@ class AdapterListExerciseInWorkout(listExercise: ArrayList<ExerciseInWorkout> , 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolderListExerciseInWorkout, position: Int) {
         val exerciseModel = listExercise[position]
-        Glide.with(holder.viewBinding.imagesCustomList)
-            .load(exerciseModel.getImage())
-            .into(holder.viewBinding.imagesCustomList)
+        if(exerciseModel.getImage() != null){
+            Glide.with(holder.viewBinding.imagesCustomList)
+                .load(exerciseModel.getImage())
+                .into(holder.viewBinding.imagesCustomList)
+        }
         holder.viewBinding.nameExercise.text = exerciseModel.getName()
-        holder.viewBinding.setRep.text = exerciseModel.getSetRep()
+        holder.viewBinding.setRep.text = exerciseModel.getSetAndRep()
         holder.viewBinding.linearLayoutCustomItem.setOnClickListener {
             onClick.onClickListener(exerciseModel.getIdExercise().toString())
         }

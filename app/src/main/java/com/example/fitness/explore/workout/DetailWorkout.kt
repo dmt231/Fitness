@@ -16,13 +16,15 @@ import com.example.fitness.explore.workout.excercise.DetailExercise
 import com.example.fitness.model.Exercise
 import com.example.fitness.model.Workout
 import com.example.fitness.repository.ExerciseRepository
+import com.example.fitness.repository.WorkoutRepository
 
 
 class DetailWorkout : Fragment() {
     private lateinit var viewBinding: LayoutDetailWorkoutBinding
-    private lateinit var workout: Workout
+    private var workout: Workout? = null
     private lateinit var adapter: AdapterListExerciseInWorkout
     private lateinit var exerciseRepository: ExerciseRepository
+    private lateinit var workoutRepository: WorkoutRepository
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -30,8 +32,8 @@ class DetailWorkout : Fragment() {
     ): View? {
         viewBinding = LayoutDetailWorkoutBinding.inflate(inflater, container, false)
         exerciseRepository = ExerciseRepository()
+        workoutRepository = WorkoutRepository()
         getWorkoutData()
-        bindingData()
         viewBinding.btnBack.setOnClickListener {
             requireActivity().supportFragmentManager.popBackStack()
         }
@@ -39,19 +41,17 @@ class DetailWorkout : Fragment() {
 
         }
         viewBinding.btnStartWorkout.setOnClickListener {
-            onChangeToStartWorkout(workout)
+            onChangeToStartWorkout(workout!!)
         }
-        setUpRecyclerView()
-        getExerciseDataInWorkout()
         return viewBinding.root
     }
 
     @SuppressLint("SetTextI18n")
     private fun bindingData() {
-        loadImage(workout.imgCovered!!)
-        viewBinding.nameWorkout.text = workout.name
-        viewBinding.timeTxt.text = workout.time.toString() + " Phút"
-        when (workout.type) {
+        loadImage(workout!!.imgCovered!!)
+        viewBinding.nameWorkout.text = workout!!.name
+        viewBinding.timeTxt.text = workout!!.time.toString() + " Phút"
+        when (workout!!.type) {
             "BodyWeight" -> {
                 viewBinding.type.text = "Trọng Lượng Cơ Thể"
             }
@@ -65,7 +65,7 @@ class DetailWorkout : Fragment() {
                 viewBinding.type.text = "Giãn Cơ"
             }
         }
-        when (workout.difficulty) {
+        when (workout!!.difficulty) {
             "Beginner" -> {
                 viewBinding.level.text = "Dễ"
             }
@@ -76,15 +76,15 @@ class DetailWorkout : Fragment() {
                 viewBinding.level.text = "Khó"
             }
         }
-        viewBinding.txtDescription.text = workout.overview
-        viewBinding.txtEquipment.text = handleEquipmentData(workout.equipment!!)
+        viewBinding.txtDescription.text = workout!!.overview
+        viewBinding.txtEquipment.text = handleEquipmentData(workout!!.equipment!!)
         handleRepeat()
     }
 
     @SuppressLint("SetTextI18n")
     private fun handleRepeat() {
-        if (workout.repeat != 0) {
-            viewBinding.numberRepeat.text = "Lặp Lại ${workout.repeat.toString()} lần"
+        if (workout!!.repeat != 0) {
+            viewBinding.numberRepeat.text = "Lặp Lại ${workout!!.repeat.toString()} lần"
         } else {
             viewBinding.layoutRepeat.visibility = View.GONE
         }
@@ -92,13 +92,11 @@ class DetailWorkout : Fragment() {
 
     @SuppressLint("NotifyDataSetChanged")
     private fun getExerciseDataInWorkout() {
-        for (exerciseInWorkout in workout.listExercise!!) {
-            Log.d("Exercise In Workout", exerciseInWorkout.getIdExercise().toString())
+        for (exerciseInWorkout in workout!!.listExercise!!) {
             exerciseRepository.getExerciseByDocument(
                 exerciseInWorkout.getIdExercise()!!,
                 object : ExerciseRepository.OnCompleteListener {
                     override fun onCompleteListener(exercise: Exercise) {
-                        Log.d("Name : ", exercise.getName().toString())
                         exerciseInWorkout.setImage(exercise.getImage()!!)
                         exerciseInWorkout.setName(exercise.getName()!!)
                         adapter.notifyDataSetChanged()
@@ -111,7 +109,22 @@ class DetailWorkout : Fragment() {
     private fun getWorkoutData() {
         val bundle = arguments
         if (bundle != null) {
-            workout = bundle["workout"] as Workout
+            if(bundle["workout"] != null) {
+                workout = bundle["workout"] as Workout
+                bindingData()
+                setUpRecyclerView()
+                getExerciseDataInWorkout()
+            }else if(bundle["workoutFromPlan"] != null){
+                val workout = bundle["workoutFromPlan"] as String
+                workoutRepository.getWorkoutByDocumentId(workout, object : WorkoutRepository.OnCompleteListener{
+                    override fun onCompleteListener(workout: Workout) {
+                        resignedWorkout(workout)
+                        bindingData()
+                        setUpRecyclerView()
+                        getExerciseDataInWorkout()
+                    }
+                })
+            }
         }
     }
 
@@ -151,7 +164,7 @@ class DetailWorkout : Fragment() {
         val layout = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
         viewBinding.recyclerViewListExercise.layoutManager = layout
         adapter = AdapterListExerciseInWorkout(
-            workout.listExercise!!,
+            workout!!.listExercise!!,
             object : AdapterListExerciseInWorkout.OnClickListenerExerciseInWorkout {
                 override fun onClickListener(idExercise: String) {
                     val detailExercise = DetailExercise()
@@ -177,5 +190,8 @@ class DetailWorkout : Fragment() {
         fragmentTrans.replace(R.id.layout_main_activity, startWorkout)
         fragmentTrans.addToBackStack(startWorkout.tag)
         fragmentTrans.commit()
+    }
+    private fun resignedWorkout(workout : Workout){
+        this.workout = workout
     }
 }

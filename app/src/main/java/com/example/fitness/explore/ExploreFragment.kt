@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.fitness.R
 import com.example.fitness.databinding.LayoutExploreBinding
+import com.example.fitness.explore.plan.PlanFragment
 import com.example.fitness.explore.workout.MenuWorkoutFragment
 import com.google.android.material.tabs.TabLayout
 
@@ -34,7 +35,7 @@ class ExploreFragment : Fragment() {
                     changedToWorkoutMenuScreen()
                 }
                 else{
-                    requireActivity().supportFragmentManager.popBackStack()
+                    changedToPlanMenuScreen()
                 }
             }
 
@@ -48,10 +49,19 @@ class ExploreFragment : Fragment() {
 
         })
     }
+
+    private fun changedToPlanMenuScreen() {
+        val planFragment = PlanFragment()
+        val fragmentTrans = requireActivity().supportFragmentManager.beginTransaction()
+        fragmentTrans.replace(R.id.contentLayout, planFragment)
+        fragmentTrans.addToBackStack(planFragment.tag)
+        fragmentTrans.commit()
+    }
+
     private fun changedToWorkoutMenuScreen(){
         val menuWorkoutFragment = MenuWorkoutFragment()
         val fragmentTrans = requireActivity().supportFragmentManager.beginTransaction()
-        fragmentTrans.add(R.id.contentLayout, menuWorkoutFragment)
+        fragmentTrans.replace(R.id.contentLayout, menuWorkoutFragment)
         fragmentTrans.addToBackStack(menuWorkoutFragment.tag)
         fragmentTrans.commit()
     }

@@ -49,7 +49,7 @@ class AdapterForEquipmentWorkout(listEquipment: ArrayList<String>, onClickListen
                 holder.viewBinding.imageForEquipment.setImageResource(R.drawable.abs)
             }
         }
-        holder.viewBinding.txtForEquipment.setOnClickListener {
+        holder.viewBinding.cardViewEquipment.setOnClickListener {
             when (type) {
                 "Tạ Đơn" -> {
                     onClickListener.onClickListener("Dumbbell", "Tạ Đơn")

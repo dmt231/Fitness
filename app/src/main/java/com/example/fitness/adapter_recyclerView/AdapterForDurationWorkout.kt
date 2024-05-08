@@ -32,7 +32,7 @@ class AdapterForDurationWorkout(listTime: ArrayList<String>, onClickListener: On
     override fun onBindViewHolder(holder: ViewHolderTimeWorkout, position: Int) {
         val type = listOfTime[position]
         holder.viewBinding.txtForMinutes.text = type
-        holder.viewBinding.txtForMinutes.setOnClickListener {
+        holder.viewBinding.cardViewDuration.setOnClickListener {
             onClickListener.onClickListener(type, "$type Phút")
         }
     }

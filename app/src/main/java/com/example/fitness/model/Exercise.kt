@@ -20,6 +20,7 @@ class Exercise (
     private var type: String? = null
     private var imgCovered: String? = null
     private var srcVideo: String? = null
+    private var isSelected : Boolean = false
 
     init {
         this.id = id
@@ -58,5 +59,11 @@ class Exercise (
     }
      fun getSrcVideo() : String?{
         return srcVideo;
+    }
+    fun setChecked(status : Boolean){
+        this.isSelected = status
+    }
+    fun getStatusChecked(): Boolean{
+        return isSelected
     }
 }
