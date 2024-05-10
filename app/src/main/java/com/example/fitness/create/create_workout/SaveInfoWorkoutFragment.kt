@@ -12,6 +12,8 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.fitness.R
 import com.example.fitness.adapter_recyclerView.adapter_excercise.AdapterSelectSetRepForExercise
+import com.example.fitness.create.create_plan.SaveInfoPlanFragment
+import com.example.fitness.create.model.PersonalWorkout
 import com.example.fitness.databinding.LayoutSaveInfoWorkoutBinding
 import com.example.fitness.main.MainFragment
 import com.example.fitness.model.ExerciseInWorkout
@@ -20,12 +22,15 @@ import com.example.fitness.repository.WorkoutRepository
 import com.example.fitness.storage.Preferences
 
 class SaveInfoWorkoutFragment : Fragment() {
-    private lateinit var viewBinding : LayoutSaveInfoWorkoutBinding
+    private lateinit var viewBinding: LayoutSaveInfoWorkoutBinding
     private var nameWorkout = ""
-    private lateinit var listExerciseInWorkout : ArrayList<ExerciseInWorkout>
-    private lateinit var adapter : AdapterSelectSetRepForExercise
+    private lateinit var listExerciseInWorkout: ArrayList<ExerciseInWorkout>
+    private lateinit var adapter: AdapterSelectSetRepForExercise
     private lateinit var workoutRepository: WorkoutRepository
-    private lateinit var preferences : Preferences
+    private lateinit var preferences: Preferences
+    private var typeForWorkout: String = ""
+    private var namePlan: String = ""
+    private var listWorkout : ArrayList<PersonalWorkout>? = null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -37,12 +42,37 @@ class SaveInfoWorkoutFragment : Fragment() {
         setUpRecyclerView()
         workoutRepository = WorkoutRepository()
         viewBinding.btnSaveData.setOnClickListener {
-            val workout = Workout(nameWorkout, null,null,null,nameWorkout,null,null,null,null,null, listExerciseInWorkout)
-            workoutRepository.createWorkoutByUser(preferences.getUserIdValues()!!, workout, object : WorkoutRepository.AddSuccessListener{
-                override fun addSuccessListener() {
-                    changeToMainFragment()
+            if(validateSaveData()){
+                val workout = PersonalWorkout(
+                    nameWorkout,
+                    nameWorkout,
+                    listExerciseInWorkout
+                )
+                when (typeForWorkout) {
+                    "Workout" -> {
+                        workoutRepository.createWorkoutByUser(
+                            preferences.getUserIdValues()!!,
+                            workout,
+                            object : WorkoutRepository.AddSuccessListener {
+                                override fun addSuccessListener() {
+                                    changeToMainFragment()
+                                }
+                            })
+                    }
+                    "Plan" -> {
+                        if(listWorkout == null){
+                            listWorkout = ArrayList()
+                            listWorkout!!.add(workout)
+                        }else{
+                            listWorkout?.add(workout)
+                        }
+                        changeToSaveInfoPlanFragment()
+                    }
                 }
-            })
+            }else{
+                showToast("Hãy điền đủ thông tin các bài tập")
+            }
+
         }
         viewBinding.layoutMain.setOnClickListener {
             //Do Nothing
@@ -53,36 +83,60 @@ class SaveInfoWorkoutFragment : Fragment() {
         return viewBinding.root
     }
 
+    private fun changeToSaveInfoPlanFragment() {
+        val saveInfoPlanFragment = SaveInfoPlanFragment()
+        val fragmentTrans = requireActivity().supportFragmentManager.beginTransaction()
+        val bundle = Bundle()
+        bundle.putString("NamePlan", namePlan)
+        bundle.putSerializable("listWorkout", listWorkout)
+        saveInfoPlanFragment.arguments = bundle
+        fragmentTrans.add(R.id.layout_main_activity, saveInfoPlanFragment)
+        fragmentTrans.addToBackStack(saveInfoPlanFragment.tag)
+        fragmentTrans.commit()
+    }
+
     private fun changeToMainFragment() {
         val mainFragment = MainFragment()
         val fragmentTrans = requireActivity().supportFragmentManager.beginTransaction()
         val bundle = Bundle()
-        bundle.putString("Tab", "Create")
+        bundle.putString("Menu", "Create")
+        bundle.putString("Tab", "Workout")
         mainFragment.arguments = bundle
         fragmentTrans.replace(R.id.layout_main_activity, mainFragment)
         fragmentTrans.commit()
     }
 
-    private fun getDataWorkout(){
+    private fun getDataWorkout() {
         val bundle = arguments
-        if(bundle != null){
+        if (bundle != null) {
             nameWorkout = bundle["nameWorkout"] as String
             viewBinding.editTextSetName.setText(nameWorkout)
             listExerciseInWorkout = bundle["listExercise"] as ArrayList<ExerciseInWorkout>
+            typeForWorkout = bundle["WorkoutFor"] as String
+            if (bundle["NamePlan"] != null) {
+                this.namePlan = bundle["NamePlan"] as String
+            }
+            if(bundle["listWorkout"] != null){
+                this.listWorkout = bundle["listWorkout"] as ArrayList<PersonalWorkout>
+            }
         }
     }
-    private fun setUpRecyclerView(){
+
+    private fun setUpRecyclerView() {
         viewBinding.recyclerViewListExercise.setHasFixedSize(false)
         val layout = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
         viewBinding.recyclerViewListExercise.layoutManager = layout
-        adapter = AdapterSelectSetRepForExercise(listExerciseInWorkout, object : AdapterSelectSetRepForExercise.ShowToast{
-            override fun showToast() {
-                showToast("Lưu Thành Công")
-            }
-        })
+        adapter = AdapterSelectSetRepForExercise(
+            listExerciseInWorkout,
+            object : AdapterSelectSetRepForExercise.ShowToast {
+                override fun showToast() {
+                    showToast("Lưu Thành Công")
+                }
+            })
         viewBinding.recyclerViewListExercise.adapter = adapter
     }
-    private fun showToast(message : String){
+
+    private fun showToast(message: String) {
         val toast = Toast(activity)
         val inflater = requireActivity().layoutInflater
         val viewInflate: View = inflater.inflate(
@@ -96,5 +150,13 @@ class SaveInfoWorkoutFragment : Fragment() {
         toast.duration = Toast.LENGTH_LONG
         toast.show()
     }
-
+    private fun validateSaveData() : Boolean{
+        var check = true
+        for(exercise in listExerciseInWorkout){
+            if(exercise.getSetAndRep() == null){
+                check = false
+            }
+        }
+        return check
+    }
 }

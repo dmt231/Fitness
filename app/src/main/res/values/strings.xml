@@ -88,7 +88,7 @@
     <string name="update">Cập Nhật</string>
     <string name="cancel">Hủy Bỏ</string>
     <string name="chi_ti_t_l_ch_t_p">Chi Tiết Lịch Tập</string>
-    <string name="t_o_bu_i_t_p">Tạo Buổi Tập</string>
+    <string name="createWorkout">Tạo Buổi Tập</string>
     <string name="enter_workout_name">Điền Tên Buổi Tập Của Bạn</string>
     <string name="add_exercise">Thêm Bài Tập Vào Buổi Tập</string>
     <string name="add_exercise_in_workout">Thêm Bài Tập</string>
@@ -106,4 +106,10 @@
     <string name="list_exercise">Danh Sách Bài Tập</string>
     <string name="save_workout">Lưu Buổi Tập</string>
     <string name="save">Lưu</string>
+    <string name="add_new_workout">Thêm Buổi Tập</string>
+    <string name="namePlan">Tạo Kế Hoạch Tập Luyện</string>
+    <string name="enterNamePlan">Điền Tên Kế Hoạch Tập Luyện</string>
+    <string name="create_plan">Tạo Kế Hoạch</string>
+    <string name="list_workout">Danh Sách Buổi Tập</string>
+    <string name="add_more_workout">Thêm Buổi Tập</string>
 </resources>

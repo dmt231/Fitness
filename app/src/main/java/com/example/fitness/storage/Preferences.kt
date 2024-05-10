@@ -2,6 +2,7 @@ package com.example.fitness.storage
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.example.fitness.model.WorkoutInPlan
 
 class Preferences(private val context: Context) {
     private val myPreferences : String = "MyPreferences"

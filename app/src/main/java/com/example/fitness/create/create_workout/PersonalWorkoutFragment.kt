@@ -8,16 +8,17 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.fitness.R
 import com.example.fitness.adapter_recyclerView.adapter_workout.AdapterListPersonalWorkout
+import com.example.fitness.create.model.PersonalWorkout
 import com.example.fitness.databinding.LayoutPersonalWorkoutBinding
 import com.example.fitness.model.Workout
 import com.example.fitness.repository.WorkoutRepository
 import com.example.fitness.storage.Preferences
 
-class MyWorkoutFragment : Fragment() {
+class PersonalWorkoutFragment : Fragment() {
     private lateinit var viewBinding : LayoutPersonalWorkoutBinding
     private lateinit var workoutRepository: WorkoutRepository
     private lateinit var preferences: Preferences
-    private lateinit var listWorkoutForResult : ArrayList<Workout>
+    private lateinit var listWorkoutForResult : ArrayList<PersonalWorkout>
     private lateinit var adapter : AdapterListPersonalWorkout
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,7 +48,7 @@ class MyWorkoutFragment : Fragment() {
                 viewBinding.btnCreate.visibility = View.INVISIBLE
             }
 
-            override fun onFoundListWorkoutListener(listWorkout: ArrayList<Workout>) {
+            override fun onFoundListWorkoutListener(listWorkout: ArrayList<PersonalWorkout>) {
                 viewBinding.recyclerViewMyWorkout.visibility = View.VISIBLE
                 viewBinding.linearLayout.visibility = View.GONE
                 viewBinding.btnCreate.visibility = View.VISIBLE
@@ -62,6 +63,9 @@ class MyWorkoutFragment : Fragment() {
     private fun changeToCreateNameWorkout(){
         val createNameWorkout = CreateNameWorkout()
         val fragmentTrans = requireActivity().supportFragmentManager.beginTransaction()
+        val bundle = Bundle()
+        bundle.putString("WorkoutFor", "Workout")
+        createNameWorkout.arguments = bundle
         fragmentTrans.add(R.id.layout_main_activity, createNameWorkout)
         fragmentTrans.addToBackStack(createNameWorkout.tag)
         fragmentTrans.commit()
@@ -71,13 +75,13 @@ class MyWorkoutFragment : Fragment() {
         val layout = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
         viewBinding.recyclerViewMyWorkout.layoutManager = layout
         adapter = AdapterListPersonalWorkout(listWorkoutForResult, object : AdapterListPersonalWorkout.OnWorkoutClickListener{
-            override fun onWorkoutClickListener(workout: Workout) {
+            override fun onWorkoutClickListener(workout: PersonalWorkout) {
                 changeToDetailWorkout(workout)
             }
         })
         viewBinding.recyclerViewMyWorkout.adapter = adapter
     }
-    private fun changeToDetailWorkout(workout : Workout){
+    private fun changeToDetailWorkout(workout : PersonalWorkout){
         val detailPersonalWorkout = DetailPersonalWorkout()
         val fragmentTrans = requireActivity().supportFragmentManager.beginTransaction()
         val bundle = Bundle()

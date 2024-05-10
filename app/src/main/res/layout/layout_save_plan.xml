@@ -21,7 +21,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/createWorkout"
+            android:text="@string/namePlan"
             android:fontFamily="@font/nunito_bold"
             android:textSize="@dimen/_16ssp"
             android:layout_centerHorizontal="true"
@@ -35,34 +35,57 @@
         android:fontFamily="@font/helvetica_rounded_bold"
         android:textSize="@dimen/_18ssp"
         android:textAlignment="center"
-        android:hint="@string/enter_workout_name"
+        android:hint="@string/enterNamePlan"
         android:textColorHint="#B3B0B0"
         android:background="@drawable/background_edit_text_create_name_workout"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/list_exercise"
+        android:text="@string/list_workout"
         android:layout_margin="@dimen/_10sdp"
         android:fontFamily="@font/nunito_bold"
         android:textSize="@dimen/_16ssp"
         android:textColor="@color/black"
         android:layout_marginTop="@dimen/_15sdp"/>
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewListExercise"
+        android:id="@+id/recyclerViewListWorkout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:layout_margin="@dimen/_10sdp"/>
-    <Button
-        android:id="@+id/btnSaveData"
-        android:layout_width="@dimen/_250sdp"
-        android:layout_height="@dimen/_40sdp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/_20sdp"
-        android:layout_marginBottom="@dimen/_15sdp"
-        android:background="@drawable/background_button_get_started"
-        android:fontFamily="@font/helvetica_bold"
-        android:text="@string/save_workout"
-        android:textColor="@color/white"
-        android:textSize="@dimen/_12ssp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/btnAddMoreWorkout"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_weight="0.5"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginBottom="@dimen/_15sdp"
+            android:background="@drawable/background_button_add_more_workout"
+            android:fontFamily="@font/helvetica_bold"
+            android:text="@string/add_more_workout"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_11ssp" />
+        <Button
+            android:layout_marginStart="@dimen/_10sdp"
+            android:id="@+id/btnSaveData"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_weight="0.5"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginBottom="@dimen/_15sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+            android:background="@drawable/background_button_get_started"
+            android:fontFamily="@font/helvetica_bold"
+            android:text="Lưu Kế Hoạch"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_11ssp" />
+    </LinearLayout>
 </LinearLayout>

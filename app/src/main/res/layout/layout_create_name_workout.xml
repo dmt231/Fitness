@@ -21,7 +21,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/t_o_bu_i_t_p"
+            android:text="@string/createWorkout"
             android:fontFamily="@font/nunito_bold"
             android:textSize="@dimen/_16ssp"
             android:layout_centerHorizontal="true"

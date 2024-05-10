@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity() {
         val mainFragment = MainFragment()
         val fragmentTrans = this.supportFragmentManager.beginTransaction()
         val bundle = Bundle()
-        bundle.putString("Tab", "Explore")
+        bundle.putString("Menu", "Explore")
         mainFragment.arguments = bundle
         fragmentTrans.replace(R.id.layout_main_activity, mainFragment)
         fragmentTrans.commit()

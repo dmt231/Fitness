@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.fitness.R
 import com.example.fitness.adapter_recyclerView.adapter_excercise.AdapterListExerciseInWorkout
+import com.example.fitness.create.model.PersonalWorkout
 import com.example.fitness.databinding.LayoutDetailPersonalWorkoutBinding
 import com.example.fitness.explore.workout.StartWorkout
 import com.example.fitness.model.Workout
@@ -15,7 +16,7 @@ import com.example.fitness.model.Workout
 
 class DetailPersonalWorkout : Fragment() {
     private lateinit var viewBinding : LayoutDetailPersonalWorkoutBinding
-    private var workout: Workout? = null
+    private var workout: PersonalWorkout? = null
     private lateinit var adapter: AdapterListExerciseInWorkout
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,13 +38,13 @@ class DetailPersonalWorkout : Fragment() {
     }
 
     private fun bindingData() {
-        viewBinding.nameWorkout.text = workout?.name
+        viewBinding.nameWorkout.text = workout?.nameWorkout
     }
 
     private fun getDataWorkout(){
         val bundle = arguments
         if(bundle != null){
-            this.workout = bundle["workoutPersonal"] as Workout
+            this.workout = bundle["workoutPersonal"] as PersonalWorkout
             bindingData()
             setUpRecyclerView()
         }
@@ -53,7 +54,7 @@ class DetailPersonalWorkout : Fragment() {
         val layout = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
         viewBinding.recyclerViewListExercise.layoutManager = layout
         adapter = AdapterListExerciseInWorkout(
-            workout!!.listExercise!!,
+            workout!!.listExercise,
             object : AdapterListExerciseInWorkout.OnClickListenerExerciseInWorkout {
                 override fun onClickListener(idExercise: String) {
 
@@ -62,11 +63,11 @@ class DetailPersonalWorkout : Fragment() {
             })
         viewBinding.recyclerViewListExercise.adapter = adapter
     }
-    private fun onChangeToStartWorkout(workout: Workout) {
+    private fun onChangeToStartWorkout(workout: PersonalWorkout) {
         val startWorkout = StartWorkout()
         val fragmentTrans = requireActivity().supportFragmentManager.beginTransaction()
         val bundle = Bundle()
-        bundle.putSerializable("workout", workout)
+        bundle.putSerializable("workoutPersonal", workout)
         startWorkout.arguments = bundle
         fragmentTrans.add(R.id.layout_main_activity, startWorkout)
         fragmentTrans.addToBackStack(startWorkout.tag)

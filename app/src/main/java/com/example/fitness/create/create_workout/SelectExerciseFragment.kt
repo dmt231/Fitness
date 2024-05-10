@@ -15,11 +15,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.fitness.R
 import com.example.fitness.adapter_recyclerView.adapter_excercise.AdapterSelectedExercise
+import com.example.fitness.create.model.PersonalWorkout
 import com.example.fitness.databinding.LayoutSelectExerciseBinding
 import com.example.fitness.explore.workout.excercise.DetailExercise
 import com.example.fitness.explore.workout.excercise.ExerciseViewModel
 import com.example.fitness.model.Exercise
 import com.example.fitness.model.ExerciseInWorkout
+import com.example.fitness.model.Workout
 
 
 class SelectExerciseFragment : Fragment() {
@@ -29,6 +31,9 @@ class SelectExerciseFragment : Fragment() {
     private lateinit var listExercise : ArrayList<Exercise>
     private lateinit var listExerciseInWorkout : ArrayList<ExerciseInWorkout>
     private var nameWorkout : String = ""
+    private var typeForWorkout : String = ""
+    private var namePlan : String = ""
+    private var listWorkout : ArrayList<PersonalWorkout>? = null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -83,7 +88,7 @@ class SelectExerciseFragment : Fragment() {
             override fun countNumberExerciseSelected(number: Int) {
                 if(number != 0){
                 val txtRecent = requireContext().getString(R.string.add_exercise_in_workout)
-                viewBinding.btnAddExercise.text = "$txtRecent (${number.toString()})"}
+                viewBinding.btnAddExercise.text = "$txtRecent (${number})"}
             }
 
         })
@@ -105,6 +110,13 @@ class SelectExerciseFragment : Fragment() {
         val bundle = arguments
         if(bundle != null){
             nameWorkout = bundle["nameWorkout"] as String
+            typeForWorkout = bundle["WorkoutFor"] as String
+            if(bundle["NamePlan"] != null){
+                this.namePlan = bundle["NamePlan"] as String
+            }
+            if(bundle["listWorkout"] != null){
+                this.listWorkout = bundle["listWorkout"] as ArrayList<PersonalWorkout>
+            }
         }
     }
     private fun searchExercise(){
@@ -140,7 +152,14 @@ class SelectExerciseFragment : Fragment() {
         val fragmentTrans = requireActivity().supportFragmentManager.beginTransaction()
         val bundle = Bundle()
         bundle.putString("nameWorkout", nameWorkout)
+        bundle.putString("WorkoutFor", typeForWorkout)
         bundle.putSerializable("listExercise", listExerciseInWorkout)
+        if(namePlan != ""){
+            bundle.putString("NamePlan", namePlan)
+        }
+        if(listWorkout != null){
+            bundle.putSerializable("listWorkout", listWorkout)
+        }
         saveWorkout.arguments = bundle
         fragmentTrans.add(R.id.layout_main_activity, saveWorkout)
         fragmentTrans.addToBackStack(saveWorkout.tag)

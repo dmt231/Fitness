@@ -2,6 +2,7 @@ package com.example.fitness.repository
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import com.example.fitness.create.model.PersonalWorkout
 import com.example.fitness.model.ExerciseInWorkout
 import com.example.fitness.model.Workout
 import com.google.firebase.firestore.FirebaseFirestore
@@ -15,14 +16,14 @@ class WorkoutRepository {
     fun getWorkoutLiveData(): MutableLiveData<ArrayList<Workout>> {
         return workoutLiveData
     }
-    fun createWorkoutByUser(userId: String, workout : Workout, addSuccessListener: AddSuccessListener){
+    fun createWorkoutByUser(userId: String, workout : PersonalWorkout, addSuccessListener: AddSuccessListener){
         val collectionRef = fireStore.collection("Workout")
         val hashMap: MutableMap<String, Any> = HashMap()
-        hashMap["IdWorkout"] = "Id${workout.id.toString()}"
-        hashMap["Name"] = workout.name.toString()
-        hashMap["ListOfExcercice"] = workout.listExercise!!
+        hashMap["IdWorkout"] = "Id${workout.idWorkout}"
+        hashMap["Name"] = workout.nameWorkout
+        hashMap["ListOfExcercice"] = workout.listExercise
         hashMap["author"] = userId
-        collectionRef.document(workout.id!! + " " +userId).set(hashMap).addOnCompleteListener {
+        collectionRef.document(workout.idWorkout + " " +userId).set(hashMap).addOnCompleteListener {
             if (it.isSuccessful) {
                 addSuccessListener.addSuccessListener()
             } else {
@@ -345,10 +346,11 @@ class WorkoutRepository {
             .get()
             .addOnCompleteListener {
                 if(it.isSuccessful){
-                    val listWorkout = ArrayList<Workout>()
+                    val listWorkout = ArrayList<PersonalWorkout>()
                     if(!it.result.isEmpty){
                         for(workout in it.result){
                             val name = workout.getString("Name")
+                            val id = workout.getString("IdWorkout")
                             val listExercise: List<Map<String, Any>> =
                                 workout.get("ListOfExcercice") as List<Map<String, Any>>
 
@@ -365,17 +367,9 @@ class WorkoutRepository {
                                     exerciseInWorkout.setName(nameExercise)
                                     listExerciseInWorkout.add(exerciseInWorkout)
                                 }
-                            val workoutModel = Workout(
-                                null,
-                                null,
-                                null,
-                                null,
-                                name,
-                                null,
-                                null,
-                                null,
-                                null,
-                                null,
+                            val workoutModel = PersonalWorkout(
+                                id!!,
+                                name!!,
                                 listExerciseInWorkout
                             )
                             listWorkout.add(workoutModel)
@@ -393,7 +387,7 @@ class WorkoutRepository {
     }
     interface QueryListWorkout{
         fun onNotFoundListener()
-        fun onFoundListWorkoutListener(listWorkout : ArrayList<Workout>)
+        fun onFoundListWorkoutListener(listWorkout : ArrayList<PersonalWorkout>)
     }
     interface AddSuccessListener{
         fun addSuccessListener()

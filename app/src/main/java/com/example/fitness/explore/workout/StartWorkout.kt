@@ -7,7 +7,6 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.Handler
-import android.util.Log
 import android.view.*
 import android.widget.TextView
 import androidx.fragment.app.Fragment
@@ -20,6 +19,7 @@ import com.example.fitness.databinding.LayoutStartWorkoutBinding
 import com.example.fitness.model.ExerciseInWorkout
 import com.example.fitness.model.Workout
 import android.media.MediaPlayer
+import com.example.fitness.create.model.PersonalWorkout
 import com.example.fitness.databinding.LayoutDialogEndWorkoutBinding
 import com.example.fitness.model.History
 import com.example.fitness.repository.UserRepository
@@ -33,7 +33,8 @@ class StartWorkout : Fragment() {
     private var adapter: AdapterExerciseInStartWorkout? = null
     private var listExercise: ArrayList<ExerciseInWorkout> = ArrayList()
     private var userRepository: UserRepository? = null
-    private lateinit var workout: Workout
+    private  var workout: Workout? = null
+    private  var personalWorkout: PersonalWorkout?= null
     private lateinit var handler: Handler
     private var seconds = 0
     private var timeStart = 60000
@@ -65,7 +66,6 @@ class StartWorkout : Fragment() {
         handler = Handler()
         userRepository = UserRepository()
         getDataWorkout()
-        setUpData()
         setUpRecyclerView()
         startCheckTimeWorkout()
         setUpMinuteSecondRest()
@@ -154,9 +154,16 @@ class StartWorkout : Fragment() {
 
         val userId = Preferences(requireContext()).getUserIdValues()
 
+        val workoutOutputName: String
+        if(workout != null){
+            workoutOutputName = workout!!.name!!
+        }else{
+            workoutOutputName = personalWorkout!!.nameWorkout
+        }
+
         userRepository?.createHistoryForUser(
             userId,
-            workout.name,
+            workoutOutputName,
             dateResult,
             percentageString,
             viewBinding.Time.text.toString()
@@ -165,7 +172,7 @@ class StartWorkout : Fragment() {
         changeToFinishWorkout(
             History(
                 userId!!,
-                workout.name!!,
+                workoutOutputName,
                 dateResult,
                 percentageString,
                 viewBinding.Time.text.toString()
@@ -207,18 +214,30 @@ class StartWorkout : Fragment() {
     private fun getDataWorkout() {
         val bundle = arguments
         if (bundle != null) {
-            workout = bundle["workout"] as Workout
-            for (exercise in workout.listExercise!!) {
-                Log.d("Name Exercise", exercise.getName().toString())
+            if(bundle["workout"] != null){
+                workout = bundle["workout"] as Workout
+                viewBinding.nameWorkout.text = workout!!.name
+                handleRepeatListExerciseFromWorkout()
             }
+            if(bundle["workoutPersonal"] != null){
+                personalWorkout = bundle["workoutPersonal"] as PersonalWorkout
+                viewBinding.nameWorkout.text = personalWorkout!!.nameWorkout
+                handleRepeatListExerciseFromPersonalWorkout()
+            }
+
         }
-        handleRepeatListExercise()
+
+    }
+
+    private fun handleRepeatListExerciseFromPersonalWorkout() {
+        val listResult = personalWorkout!!.listExercise
+        handleExercise(listResult)
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    private fun handleRepeatListExercise() {
-        val listResult = workout.listExercise
-        val repeat = workout.repeat  //For get the repeat in each workout
+    private fun handleRepeatListExerciseFromWorkout() {
+        val listResult = workout!!.listExercise
+        val repeat = workout!!.repeat  //For get the repeat in each workout
         if (listResult != null) {
             if (repeat != null) {
                 if (repeat != 0) {  //If we have repeat, we can handle that how many times does the workout will be looped
@@ -228,9 +247,8 @@ class StartWorkout : Fragment() {
                     }
                 } else {  //If repeat is 0, we don't need to repeat the handleExercise
                     handleExercise(listResult)
+                    adapter?.notifyDataSetChanged()
                 }
-            }else{ //If repeat is null, we don't need to repeat the handleExercise as the case 0
-                handleExercise(listResult)
             }
         }
     }
@@ -268,10 +286,6 @@ class StartWorkout : Fragment() {
                 }
             }
         }
-    }
-
-    private fun setUpData() {
-        viewBinding.nameWorkout.text = workout.name
     }
 
     override fun onDestroy() {

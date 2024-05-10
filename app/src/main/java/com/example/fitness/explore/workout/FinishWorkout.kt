@@ -41,7 +41,7 @@ class FinishWorkout : Fragment() {
         val mainFragment = MainFragment()
         val fragmentTrans = requireActivity().supportFragmentManager.beginTransaction()
         val bundle = Bundle()
-        bundle.putString("Tab", "Progress")
+        bundle.putString("Menu", "Progress")
         mainFragment.arguments = bundle
         fragmentTrans.replace(R.id.layout_main_activity, mainFragment)
         fragmentTrans.commit()

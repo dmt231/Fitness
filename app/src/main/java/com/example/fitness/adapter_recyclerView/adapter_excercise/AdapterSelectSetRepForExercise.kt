@@ -55,7 +55,6 @@ class AdapterSelectSetRepForExercise(
         holder.viewBinding.buttonSave.setOnClickListener {
             if (holder.viewBinding.radioSetRep.isChecked) {
 
-                Log.d("On Text Set Rep", "True")
                 val set = holder.viewBinding.editTxtSet.text.toString()
                 val rep = holder.viewBinding.editTxtRep.text.toString()
                 if (set.isEmpty()) {
@@ -68,7 +67,6 @@ class AdapterSelectSetRepForExercise(
 
             if (holder.viewBinding.radioTime.isChecked) {
 
-                Log.d("On Text Minutes", "True")
                 val minutes = holder.viewBinding.editTxtMinute.text.toString()
                 val second = holder.viewBinding.editTxtSecond.text.toString()
                 var setAndRep = "Mặc Định"

@@ -1,6 +1,7 @@
 package com.example.fitness.main
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,7 +28,7 @@ class MainFragment : Fragment() {
     private fun getData(){
         val bundle = arguments
         if(bundle != null){
-            type = bundle["Tab"] as String
+            type = bundle["Menu"] as String
             if(type == "Explore"){
                 changedToExplore()
                 viewBinding.bottomBar.menu.findItem(R.id.explore).isChecked = true
@@ -35,7 +36,8 @@ class MainFragment : Fragment() {
                 changedToProgress()
                 viewBinding.bottomBar.menu.findItem(R.id.progress).isChecked = true
             }else if(type == "Create"){
-                changedToCreate()
+                val tab = bundle["Tab"] as String
+                changedToCreate(tab)
                 viewBinding.bottomBar.menu.findItem(R.id.create).isChecked = true
             }
         }
@@ -65,7 +67,7 @@ class MainFragment : Fragment() {
                     viewBinding.bottomBar.menu.findItem(R.id.progress).isChecked=true
                 }
                 R.id.create ->{
-                    changedToCreate()
+                    changedToCreate("Workout")
                     viewBinding.bottomBar.menu.findItem(R.id.create).isChecked = true
                 }
             }
@@ -73,9 +75,12 @@ class MainFragment : Fragment() {
         }
     }
 
-    private fun changedToCreate() {
+    private fun changedToCreate(tab : String) {
         val createFragment = CreateFragment()
         val fragmentTrans = requireActivity().supportFragmentManager.beginTransaction()
+        val bundle = Bundle()
+        bundle.putString("Tab", tab)
+        createFragment.arguments = bundle
         fragmentTrans.replace(R.id.mainLayout, createFragment)
         fragmentTrans.commit()
     }
