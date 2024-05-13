@@ -37,7 +37,7 @@
     <string name="txtHeightWeight">Hãy nhập chiều cao, cân nặng của bạn</string>
     <string name="txtDescriptionHeightWeight">Chiều cao, cân nặng là 2 yếu tố quan trọng để tính được chỉ số khối BMI của cơ thể, giúp bạn biết được tình trạng cơ thể mình.</string>
     <string name="height">Chiều cao</string>
-    <string name="c_n_n_ng">Cân nặng</string>
+    <string name="weight">Cân nặng</string>
     <string name="khai_ph_ti_m_n_ng_c_a_b_n">Khai Phá Tiềm Năng Của Bạn</string>
     <string name="b_n_s_n_s_ng_b_t_u_t_p_luy_n_th_i">Bạn đã sẵn sàng. Bắt đầu tập luyện thôi !</string>
     <string name="txtGetStarted">Bắt Đầu</string>
@@ -112,4 +112,8 @@
     <string name="create_plan">Tạo Kế Hoạch</string>
     <string name="list_workout">Danh Sách Buổi Tập</string>
     <string name="add_more_workout">Thêm Buổi Tập</string>
+    <string name="gender">Giới Tính</string>
+    <string name="txt_birth_day">Ngày Sinh</string>
+    <string name="notification">Thông Báo</string>
+    <string name="bmi">Bmi</string>
 </resources>

@@ -11,6 +11,7 @@ import com.example.fitness.create.CreateFragment
 import com.example.fitness.databinding.LayoutMainFragmentBinding
 import com.example.fitness.explore.ExploreFragment
 import com.example.fitness.progress.ProgressFragment
+import com.example.fitness.setting.SettingFragment
 
 class MainFragment : Fragment() {
     private lateinit var viewBinding : LayoutMainFragmentBinding
@@ -70,9 +71,20 @@ class MainFragment : Fragment() {
                     changedToCreate("Workout")
                     viewBinding.bottomBar.menu.findItem(R.id.create).isChecked = true
                 }
+                R.id.setting -> {
+                    changedToSetting()
+                    viewBinding.bottomBar.menu.findItem(R.id.setting).isChecked = true
+                }
             }
             false
         }
+    }
+
+    private fun changedToSetting() {
+        val settingFragment = SettingFragment()
+        val fragmentTrans = requireActivity().supportFragmentManager.beginTransaction()
+        fragmentTrans.replace(R.id.mainLayout, settingFragment)
+        fragmentTrans.commit()
     }
 
     private fun changedToCreate(tab : String) {
