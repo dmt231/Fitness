@@ -76,4 +76,10 @@ class Preferences(private val context: Context) {
         val sharedPreferences : SharedPreferences? = context.getSharedPreferences(myPreferences, Context.MODE_PRIVATE)
         return sharedPreferences!!.getString("Bmi", null)
     }
+    fun deleteAllInformation(){
+        val sharedPreferences : SharedPreferences? = context.getSharedPreferences(myPreferences, Context.MODE_PRIVATE)
+        val editor : SharedPreferences.Editor = sharedPreferences!!.edit()
+        editor.clear()
+        editor.apply()
+    }
 }

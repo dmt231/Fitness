@@ -44,6 +44,9 @@ class AdapterForTypeWorkout(listType: ArrayList<String>, onClickListener : OnCli
             "Giãn Cơ" -> {
                 holder.viewBinding.imageForType.setImageResource(R.drawable.stretch)
             }
+            "Không Dụng Cụ" ->{
+                holder.viewBinding.imageForType.setImageResource(R.drawable.chest)
+            }
         }
         holder.viewBinding.cardView.setOnClickListener {
             when (type) {

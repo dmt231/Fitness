@@ -171,6 +171,7 @@ class StartWorkout : Fragment() {
 
         changeToFinishWorkout(
             History(
+                null,
                 userId!!,
                 workoutOutputName,
                 dateResult,

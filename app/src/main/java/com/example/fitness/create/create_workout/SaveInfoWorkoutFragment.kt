@@ -20,6 +20,9 @@ import com.example.fitness.model.ExerciseInWorkout
 import com.example.fitness.model.Workout
 import com.example.fitness.repository.WorkoutRepository
 import com.example.fitness.storage.Preferences
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class SaveInfoWorkoutFragment : Fragment() {
     private lateinit var viewBinding: LayoutSaveInfoWorkoutBinding
@@ -44,7 +47,7 @@ class SaveInfoWorkoutFragment : Fragment() {
         viewBinding.btnSaveData.setOnClickListener {
             if(validateSaveData()){
                 val workout = PersonalWorkout(
-                    nameWorkout,
+                    nameWorkout + getTimeRecent(),
                     nameWorkout,
                     listExerciseInWorkout
                 )
@@ -158,5 +161,10 @@ class SaveInfoWorkoutFragment : Fragment() {
             }
         }
         return check
+    }
+    private fun getTimeRecent(): String {
+        val calendarToday = Calendar.getInstance()
+        val sdf = SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.getDefault())
+        return sdf.format(calendarToday.time)
     }
 }

@@ -19,7 +19,7 @@ class WorkoutRepository {
     fun createWorkoutByUser(userId: String, workout : PersonalWorkout, addSuccessListener: AddSuccessListener){
         val collectionRef = fireStore.collection("Workout")
         val hashMap: MutableMap<String, Any> = HashMap()
-        hashMap["IdWorkout"] = "Id${workout.idWorkout}"
+        hashMap["IdWorkout"] = "${workout.idWorkout} + $userId"
         hashMap["Name"] = workout.nameWorkout
         hashMap["ListOfExcercice"] = workout.listExercise
         hashMap["author"] = userId
@@ -380,6 +380,32 @@ class WorkoutRepository {
                     }
                 }
             }
+    }
+    fun deleteWorkout(workoutId: String) {
+        val collectionRef = fireStore.collection("Workout")
+        collectionRef.whereEqualTo("IdWorkout", workoutId)
+            .get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val documents = task.result?.documents
+                    if (documents != null) {
+                        for (document in documents) {
+                            document.reference.delete()
+                                .addOnSuccessListener {
+                                    Log.d("Remove state", "Success")
+                                }
+                                .addOnFailureListener { e ->
+                                    Log.d("Remove state", "Failed: ${e.message}")
+                                }
+                        }
+                    } else {
+                        Log.d("Remove state", "No documents found")
+                    }
+                } else {
+                    Log.d("Remove state", "Query failed: ${task.exception?.message}")
+                }
+            }
+
     }
 
     interface OnCompleteListener {

@@ -159,7 +159,7 @@ class PlanRepository {
     fun createPlanByUser(userId: String, plan : PersonalPlan, queryListPlan: QueryListPlan ){
         val collectionRef = fireStore.collection("Plan")
         val hashMap: MutableMap<String, Any> = HashMap()
-        hashMap["IdPlan"] = "Id ${plan.idPlan}"
+        hashMap["IdPlan"] = "${plan.idPlan} + $userId"
         hashMap["Name"] = plan.namePlan
         hashMap["author"] = userId
         hashMap["listWorkout"] = plan.listWorkout
@@ -170,6 +170,32 @@ class PlanRepository {
                 Log.d("Status", "Failed")
             }
         }
+    }
+    fun deletePlan(documentPlanId : String){
+        val collectionRef = fireStore.collection("Plan")
+        collectionRef.whereEqualTo("IdPlan", documentPlanId)
+            .get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val documents = task.result?.documents
+                    if (documents != null) {
+                        for (document in documents) {
+                            document.reference.delete()
+                                .addOnSuccessListener {
+                                    Log.d("Remove state", "Success")
+                                }
+                                .addOnFailureListener { e ->
+                                    Log.d("Remove state", "Failed: ${e.message}")
+                                }
+                        }
+                    } else {
+                        Log.d("Remove state", "No documents found")
+                    }
+                } else {
+                    Log.d("Remove state", "Query failed: ${task.exception?.message}")
+                }
+            }
+
     }
     interface QueryListPlan{
         fun onSuccessListener()

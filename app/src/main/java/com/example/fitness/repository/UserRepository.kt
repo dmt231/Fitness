@@ -4,8 +4,8 @@ import android.app.Activity
 import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
-import com.example.fitness.model.Exercise
 import com.example.fitness.model.History
+import com.example.fitness.model.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -125,6 +125,24 @@ class UserRepository {
                 Log.d("Status Update : ", "Success")
             }
     }
+    fun updateHeightValueForUser(height: String, bmi: String, userId : String){
+        val documentRef = fireStore.collection("User").document(userId)
+        documentRef.update(
+           "height", height, "bmi", bmi
+        )
+            .addOnCompleteListener {
+                Log.d("Status Update : ", "Success")
+            }
+    }
+    fun updateWeightValueForUser(weight: String, bmi: String, userId : String){
+        val documentRef = fireStore.collection("User").document(userId)
+        documentRef.update(
+            "weight", weight, "bmi", bmi
+        )
+            .addOnCompleteListener {
+                Log.d("Status Update : ", "Success")
+            }
+    }
     fun createHistoryForUser(userId : String?, idWorkout : String?, date : String?, percentage : String?, duration : String?){
         val collectionRef = fireStore.collection("History")
         val hashMap: MutableMap<String, Any> = HashMap()
@@ -153,12 +171,32 @@ class UserRepository {
                         val date = history.getString("date")
                         val duration = history.getString("duration")
                         val percentage = history.getString("percentage")
-                        val historyModel = History(userId!!, workoutResult!!, date!!, percentage!!,duration!!)
+                        val historyId = history.reference.id
+                        val historyModel = History(historyId,userId!!, workoutResult!!, date!!, percentage!!,duration!!)
                         listHistory.add(historyModel)
                     }
                     historyWorkoutLiveData.value = listHistory
                 }else{
                     Log.d("Error", it.exception.toString())
+                }
+            }
+    }
+    fun deleteHistoryForUser(documentId : String){
+        val collectionRef = fireStore.collection("History")
+        collectionRef.document(documentId)
+            .get()
+            .addOnCompleteListener {
+                if(it.isSuccessful){
+                    val document = it.result
+                    if(document != null && document.exists()){
+                        document.reference.delete()
+                            .addOnSuccessListener {
+                                Log.d("Remove state", "Success")
+                            }
+                            .addOnFailureListener{
+                                Log.d("Remove state", "Failed")
+                            }
+                    }
                 }
             }
     }
@@ -183,7 +221,28 @@ class UserRepository {
                 }
             }
     }
+    fun getInformationForUser(userId: String, onQuerySuccessUser : OnQuerySuccessUser){
+        val collectionRef = fireStore.collection("User")
+        collectionRef.document(userId)
+            .get()
+            .addOnCompleteListener {
+                val firstName = it.result.getString("firstName")!!
+                val lastName = it.result.getString("lastName")!!
+                val email = it.result.getString("email")!!
+                val gender = it.result.getString("gender")!!
+                val birthDay = it.result.getString("birthday")!!
+                val height = it.result.getString("height")!!
+                val weight = it.result.getString("weight")!!
+                val bmi = it.result.getString("bmi")!!
+                val measure = it.result.getString("metric")!!
+                val user = User(firstName, lastName, email, gender,birthDay, bmi,height,weight, measure)
+                onQuerySuccessUser.onQueryInfoUSerSuccess(user)
+            }
+    }
     interface GetRecord{
         fun onReturnValue(deadlift : String, squat : String, benchPress : String)
+    }
+    interface OnQuerySuccessUser{
+        fun onQueryInfoUSerSuccess(user : User)
     }
 }

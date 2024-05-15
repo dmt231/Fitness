@@ -45,7 +45,7 @@ class AdapterForEquipmentWorkout(listEquipment: ArrayList<String>, onClickListen
             "Dây Kháng Lực" -> {
                 holder.viewBinding.imageForEquipment.setImageResource(R.drawable.resistance_band)
             }
-            "Không Có" ->{
+            "Không Dụng Cụ" ->{
                 holder.viewBinding.imageForEquipment.setImageResource(R.drawable.abs)
             }
         }

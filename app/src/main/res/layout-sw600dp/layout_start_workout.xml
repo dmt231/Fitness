@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/linearLayoutMain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#E0DFDF"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/btnCancel"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginEnd="@dimen/_15sdp"
+                android:layout_marginBottom="@dimen/_15sdp"
+                android:background="@drawable/close"
+                android:backgroundTint="@color/black" />
+
+            <TextView
+                android:id="@+id/nameWorkout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:fontFamily="@font/nunito_bold"
+                android:text="@string/chi_ti_t_bu_i_t_p"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_14ssp" />
+
+            <ImageButton
+                android:id="@+id/btnSetRestTime"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginEnd="@dimen/_15sdp"
+                android:layout_marginBottom="@dimen/_15sdp"
+                android:background="@drawable/baseline_timer_24"
+                android:backgroundTint="@color/black" />
+        </RelativeLayout>
+        <TextView
+            android:id="@+id/Time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:fontFamily="@font/nunito_bold"
+            android:textColor="@color/black"
+            android:text="02:00"
+            android:textStyle="bold"
+            android:textSize="@dimen/_18ssp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:fontFamily="@font/nunito_bold"
+            android:text="@string/danh_s_ch_b_i_t_p"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_13ssp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewExerciseInWorkout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginEnd="@dimen/_10sdp" />
+
+        <Button
+            android:id="@+id/btnFinishWorkout"
+            android:layout_width="@dimen/_280sdp"
+            android:layout_height="@dimen/_35sdp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginBottom="@dimen/_15sdp"
+            android:background="@drawable/background_button_get_started"
+            android:fontFamily="@font/helvetica_bold"
+            android:text="Hoàn Thành"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_10ssp" />
+    </LinearLayout>
+</ScrollView>

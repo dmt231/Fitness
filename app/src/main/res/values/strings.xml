@@ -116,4 +116,11 @@
     <string name="txt_birth_day">Ngày Sinh</string>
     <string name="notification">Thông Báo</string>
     <string name="bmi">Bmi</string>
+    <string name="unit">Đơn Vị</string>
+    <string name="nutrition">Dinh Dưỡng Tham Khảo</string>
+    <string name="kcal">Kcal :</string>
+    <string name="protein">Protein :</string>
+    <string name="cab">Cab :</string>
+    <string name="fat">Fat :</string>
+    <string name="nutrition_100g">Dinh Dưỡng Trên 100g Thực Phẩm</string>
 </resources>

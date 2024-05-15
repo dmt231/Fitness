@@ -1,20 +1,21 @@
 package com.example.fitness.model
 
-import android.health.connect.datatypes.units.Percentage
-
-class History(idUser : String, Workout: String, date : String, percentage: String, duration : String) : java.io.Serializable {
+class History(
+    historyId: String?,
+    idUser: String, Workout: String, date: String, percentage: String, duration: String) : java.io.Serializable {
     private var idUser : String? = null
     private var workout : String? = null
     private var date : String? = null
     private var percentage : String? =null
     private var duration : String? = null
-
+    private var historyId : String? = null
     init {
         this.idUser = idUser
         this.workout = Workout
         this.date = date
         this.percentage = percentage
         this.duration = duration
+        this.historyId = historyId
     }
      fun getDate() : String?{
         return date
@@ -27,5 +28,8 @@ class History(idUser : String, Workout: String, date : String, percentage: Strin
     }
      fun getName() : String?{
         return workout
+    }
+    fun getId() : String? {
+        return historyId
     }
 }

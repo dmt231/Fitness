@@ -2,7 +2,6 @@ package com.example.fitness.create.create_plan
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,10 +15,11 @@ import com.example.fitness.create.model.PersonalPlan
 import com.example.fitness.create.model.PersonalWorkout
 import com.example.fitness.databinding.LayoutSavePlanBinding
 import com.example.fitness.main.MainFragment
-import com.example.fitness.model.Plan
-import com.example.fitness.model.Workout
 import com.example.fitness.repository.PlanRepository
 import com.example.fitness.storage.Preferences
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class SaveInfoPlanFragment : Fragment() {
     private lateinit var viewBinding : LayoutSavePlanBinding
@@ -46,7 +46,8 @@ class SaveInfoPlanFragment : Fragment() {
             changeToAddWorkout()
         }
         viewBinding.btnSaveData.setOnClickListener {
-            val personalPlan = PersonalPlan("Id$namePlan", namePlan, listWorkout)
+
+            val personalPlan = PersonalPlan("Id$namePlan ${getTimeRecent()}", namePlan, listWorkout)
             planRepository.createPlanByUser(preferences.getUserIdValues()!!, personalPlan, object : PlanRepository.QueryListPlan{
                 override fun onSuccessListener() {
                     changeToMainFragment()
@@ -62,6 +63,11 @@ class SaveInfoPlanFragment : Fragment() {
             })
         }
         return viewBinding.root
+    }
+    private fun getTimeRecent(): String {
+        val calendarToday = Calendar.getInstance()
+        val sdf = SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.getDefault())
+        return sdf.format(calendarToday.time)
     }
 
     private fun changeToMainFragment() {

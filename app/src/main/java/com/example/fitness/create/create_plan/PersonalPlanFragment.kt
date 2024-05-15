@@ -1,20 +1,26 @@
 package com.example.fitness.create.create_plan
 
+import android.app.Dialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.fitness.R
 import com.example.fitness.adapter_recyclerView.adapter_plan.AdapterListPersonalPlan
 import com.example.fitness.adapter_recyclerView.adapter_workout.AdapterListPersonalWorkout
 import com.example.fitness.create.model.PersonalPlan
 import com.example.fitness.create.model.PersonalWorkout
+import com.example.fitness.databinding.LayoutDialogDeletePlanBinding
+import com.example.fitness.databinding.LayoutDialogDeleteWorkoutBinding
 import com.example.fitness.databinding.LayoutPersonalPlanFragmentBinding
 import com.example.fitness.model.Plan
 import com.example.fitness.repository.PlanRepository
 import com.example.fitness.storage.Preferences
+import com.example.fitness.swipe.SwipeToDeleteCallBack
 
 class PersonalPlanFragment : Fragment() {
     private lateinit var viewBinding : LayoutPersonalPlanFragmentBinding
@@ -39,6 +45,7 @@ class PersonalPlanFragment : Fragment() {
             changeToCreateNamePlan()
         }
         setUpRecyclerView()
+        swipeToDelete()
         return viewBinding.root
     }
 
@@ -97,5 +104,44 @@ class PersonalPlanFragment : Fragment() {
             }
         })
     }
+    private fun swipeToDelete(){
+        lateinit var itemTouchHelper: ItemTouchHelper
+        val swipeToDeleteCallBack = object : SwipeToDeleteCallBack(requireContext()){
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val position = viewHolder.adapterPosition
+                showDialogForWorkout(position)
+            }
 
+        }
+        itemTouchHelper = ItemTouchHelper(swipeToDeleteCallBack)
+        itemTouchHelper.attachToRecyclerView(viewBinding.recyclerViewMyPlan)
+    }
+    private fun showDialogForWorkout(position : Int){
+        val dialog = Dialog(requireContext())
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        val viewDialogBinding = LayoutDialogDeletePlanBinding.inflate(dialog.layoutInflater)
+        dialog.setContentView(viewDialogBinding.root)
+        val window = dialog.window
+        window!!.setLayout(
+            WindowManager.LayoutParams.MATCH_PARENT,
+            WindowManager.LayoutParams.WRAP_CONTENT
+        )
+        window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        val windowAttributes = window.attributes
+        windowAttributes.gravity = Gravity.CENTER
+        window.attributes = windowAttributes
+        viewDialogBinding.btnNo.setOnClickListener {
+            dialog.cancel()
+            adapter.notifyItemChanged(position)
+        }
+        viewDialogBinding.btnYes.setOnClickListener {
+            val planItem = listPlanForResult[position]
+            planRepository.deletePlan(planItem.idPlan)
+            listPlanForResult.removeAt(position)
+            adapter.notifyItemRemoved(position)
+            dialog.cancel()
+        }
+        dialog.show()
+    }
 }

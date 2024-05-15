@@ -70,8 +70,8 @@ class AdapterForListExercise(listExercise: ArrayList<Exercise>,onClick : OnClick
             override fun publishResults(p0: CharSequence?, p1: FilterResults?) {
                 listExercise = ArrayList()
                 val temp : ArrayList<Exercise> = p1!!.values as ArrayList<Exercise>
-                for(chat in temp){
-                    listExercise.add(chat)
+                for(exercise in temp){
+                    listExercise.add(exercise)
                     notifyDataSetChanged()
                 }
 

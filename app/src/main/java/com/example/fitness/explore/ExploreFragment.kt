@@ -26,8 +26,6 @@ class ExploreFragment : Fragment() {
     private fun setUpTabLayout(){
         viewBinding.tabLayout.addTab(viewBinding.tabLayout.newTab().setText("Buổi Tập"))
         viewBinding.tabLayout.addTab(viewBinding.tabLayout.newTab().setText("Lịch Tập"))
-        viewBinding.tabLayout.tabGravity = TabLayout.GRAVITY_FILL
-
         viewBinding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 val position = tab?.position

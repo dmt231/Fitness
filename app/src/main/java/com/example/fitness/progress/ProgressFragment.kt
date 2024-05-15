@@ -5,17 +5,23 @@ import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.fitness.adapter_recyclerView.adapter_progress.AdapterProgress
+import com.example.fitness.databinding.LayoutDialogDeleteHistoryBinding
+import com.example.fitness.databinding.LayoutDialogDeleteWorkoutBinding
 import com.example.fitness.databinding.LayoutDialogEndWorkoutBinding
 import com.example.fitness.databinding.LayoutDialogUpdateValueBinding
 import com.example.fitness.databinding.LayoutProgressBinding
 import com.example.fitness.model.History
 import com.example.fitness.repository.UserRepository
 import com.example.fitness.storage.Preferences
+import com.example.fitness.swipe.SwipeToDeleteCallBack
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -48,6 +54,7 @@ class ProgressFragment : Fragment() {
         viewBinding.layoutBenchPress.setOnClickListener {
             openDialogValue(userId, "benchPress")
         }
+        swipeToDelete()
         return viewBinding.root
     }
     private fun onSetUpRecyclerView() {
@@ -62,6 +69,7 @@ class ProgressFragment : Fragment() {
         historyViewModel.getAllLiveDataExercise(userId)?.observe(viewLifecycleOwner){
             if(it != null){
                 for(history in it){
+                    Log.d("History Id : ", history.getId().toString())
                     listHistory.add(history)
                 }
                 listHistory.sortWith(Comparator { h1, h2 ->
@@ -109,6 +117,46 @@ class ProgressFragment : Fragment() {
             dialog.cancel()
         }
         binding.btnNo.setOnClickListener {
+            dialog.cancel()
+        }
+        dialog.show()
+    }
+    private fun swipeToDelete(){
+        lateinit var itemTouchHelper: ItemTouchHelper
+        val swipeToDeleteCallBack = object : SwipeToDeleteCallBack(requireContext()){
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val position = viewHolder.adapterPosition
+                showDialogForWorkout(position)
+            }
+
+        }
+        itemTouchHelper = ItemTouchHelper(swipeToDeleteCallBack)
+        itemTouchHelper.attachToRecyclerView(viewBinding.recyclerViewHistory)
+    }
+    private fun showDialogForWorkout(position : Int){
+        val dialog = Dialog(requireContext())
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        val viewDialogBinding = LayoutDialogDeleteHistoryBinding.inflate(dialog.layoutInflater)
+        dialog.setContentView(viewDialogBinding.root)
+        val window = dialog.window
+        window!!.setLayout(
+            WindowManager.LayoutParams.MATCH_PARENT,
+            WindowManager.LayoutParams.WRAP_CONTENT
+        )
+        window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        val windowAttributes = window.attributes
+        windowAttributes.gravity = Gravity.CENTER
+        window.attributes = windowAttributes
+        viewDialogBinding.btnNo.setOnClickListener {
+            dialog.cancel()
+            adapter?.notifyItemChanged(position)
+        }
+        viewDialogBinding.btnYes.setOnClickListener {
+            val historyItem = listHistory[position]
+            userRepository.deleteHistoryForUser(historyItem.getId()!!)
+            listHistory.removeAt(position)
+            adapter?.notifyItemRemoved(position)
             dialog.cancel()
         }
         dialog.show()

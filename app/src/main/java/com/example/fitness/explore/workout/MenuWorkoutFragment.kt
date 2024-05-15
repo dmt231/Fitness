@@ -93,7 +93,6 @@ class MenuWorkoutFragment : Fragment() {
 
             override fun onClickListener(query: String, title: String) {
                 onChangedToListWorkout("Type", query, title)
-                Log.d("Data", query + title)
             }
         })
         viewBinding.recyclerViewType.adapter = adapterType
