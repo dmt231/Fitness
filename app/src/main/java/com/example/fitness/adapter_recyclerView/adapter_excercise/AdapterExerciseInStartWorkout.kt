@@ -47,7 +47,12 @@ class AdapterExerciseInStartWorkout(
         if (exerciseModel.getRep() != null) {
             holder.viewBinding.rep.text = exerciseModel.getRep() + " Rep"
         } else {
-            holder.viewBinding.rep.text = exerciseModel.getSetAndRep()
+            val splitResult = exerciseModel.getSetAndRep().toString().split(" ")
+            when(splitResult[1]){
+                "Minutes" ->{holder.viewBinding.rep.text = "${splitResult[0]} Phút"}
+                "Second" ->{holder.viewBinding.rep.text = "${splitResult[0]} Giây"}
+                "Hour" ->{holder.viewBinding.rep.text = "${splitResult[0]} Giờ"}
+            }
         }
         holder.viewBinding.checkBox.isChecked = exerciseModel.getChecked()
         holder.viewBinding.checkBox.setOnClickListener {

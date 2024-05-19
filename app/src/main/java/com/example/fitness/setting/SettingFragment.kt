@@ -1,8 +1,10 @@
 package com.example.fitness.setting
 
+
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Intent
+
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -13,18 +15,18 @@ import com.example.fitness.authentication.LoginSignUpActivity
 import com.example.fitness.databinding.LayoutSettingBinding
 import com.example.fitness.databinding.LayoutUpdateBmiValueBinding
 import com.example.fitness.model.User
-import com.example.fitness.repository.PlanRepository
 import com.example.fitness.repository.UserRepository
+import com.example.fitness.setting.notification.NotificationFragment
 import com.example.fitness.setting.nutrition.NutritionFragment
 import com.example.fitness.storage.Preferences
 import com.google.firebase.auth.FirebaseAuth
 import java.util.*
 
+
 class SettingFragment : Fragment() {
     private lateinit var viewBinding : LayoutSettingBinding
     private lateinit var preferences: Preferences
     private lateinit var userRepository: UserRepository
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -45,9 +47,21 @@ class SettingFragment : Fragment() {
         viewBinding.btnEditWeight.setOnClickListener {
             openDialogValue(preferences.getUserIdValues()!!, "weight")
         }
+        viewBinding.btnDetailNotification.setOnClickListener {
+            moveToDetailNotificationFragment()
+        }
         getData(preferences.getUserIdValues()!!)
         return viewBinding.root
     }
+    private fun moveToDetailNotificationFragment() {
+        val notificationFragment = NotificationFragment()
+        val fragmentTrans = requireActivity().supportFragmentManager.beginTransaction()
+        fragmentTrans.replace(R.id.mainLayout, notificationFragment)
+        fragmentTrans.addToBackStack(notificationFragment.tag)
+        fragmentTrans.commit()
+    }
+
+
 
     private fun changeToNutritionFragment() {
         val nutritionFragment = NutritionFragment()
@@ -137,5 +151,4 @@ class SettingFragment : Fragment() {
         startActivity(intent)
         requireActivity().finish()
     }
-
 }

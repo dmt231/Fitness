@@ -29,6 +29,9 @@ class NutritionFragment : Fragment() {
     ): View? {
         viewBinding = LayoutNutritionFragmentBinding.inflate(inflater, container, false)
         nutritionViewModel = ViewModelProvider(this)[NutritionViewModel::class.java]
+        viewBinding.btnBack.setOnClickListener {
+            requireActivity().supportFragmentManager.popBackStack()
+        }
         listNutrition = ArrayList()
         getData()
         setUpRecyclerView()

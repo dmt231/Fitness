@@ -9,7 +9,7 @@ class HistoryViewModel : ViewModel() {
     private var listHistoryViewModel: MutableLiveData<ArrayList<History>>? = null
     private var userRepository: UserRepository? = null
 
-    fun getAllLiveDataExercise(userId : String?): MutableLiveData<ArrayList<History>>? {
+    fun getDataHistory(userId : String?): MutableLiveData<ArrayList<History>>? {
         listHistoryViewModel = MutableLiveData()
         userRepository = UserRepository()
         loadDataHistoryRepository(userId);

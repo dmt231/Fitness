@@ -1,9 +1,12 @@
 package com.example.fitness
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.example.fitness.databinding.ActivityMainBinding
 import com.example.fitness.main.MainFragment
+import com.example.fitness.setting.broadcast.ReminderBroadcastReceiver
+
 
 class MainActivity : AppCompatActivity() {
     private lateinit var viewBinding : ActivityMainBinding

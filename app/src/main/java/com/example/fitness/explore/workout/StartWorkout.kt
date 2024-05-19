@@ -19,6 +19,7 @@ import com.example.fitness.databinding.LayoutStartWorkoutBinding
 import com.example.fitness.model.ExerciseInWorkout
 import com.example.fitness.model.Workout
 import android.media.MediaPlayer
+import android.os.Looper
 import com.example.fitness.create.model.PersonalWorkout
 import com.example.fitness.databinding.LayoutDialogEndWorkoutBinding
 import com.example.fitness.model.History
@@ -44,6 +45,8 @@ class StartWorkout : Fragment() {
     private var timeLeft = timeStart
     private var timeProgress = 0
     private var mediaPlayer: MediaPlayer? = null
+    private var isRunning = true
+    private lateinit var runnable: Runnable
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -63,7 +66,18 @@ class StartWorkout : Fragment() {
         viewBinding.btnSetRestTime.setOnClickListener {
             setUpCountDownTime()
         }
-        handler = Handler()
+        viewBinding.btnPauseResume?.setOnClickListener {
+            if(isRunning){
+                isRunning = false
+                pauseTimer()
+                viewBinding.btnPauseResume!!.setBackgroundResource(R.drawable.baseline_play_circle_filled_24)
+            }else{
+                isRunning = true
+                resumeTimer()
+                viewBinding.btnPauseResume!!.setBackgroundResource(R.drawable.baseline_pause_circle_24)
+            }
+        }
+        handler = Handler(Looper.getMainLooper())
         userRepository = UserRepository()
         getDataWorkout()
         setUpRecyclerView()
@@ -193,23 +207,34 @@ class StartWorkout : Fragment() {
     }
 
     private fun startCheckTimeWorkout() {
-        handler.post(object : Runnable {
+        runnable = object : Runnable {
             override fun run() {
-                val hours = seconds / 3600
-                val minutes = (seconds % 3600) / 60
-                val secs = seconds % 60
-                var timeString = ""
-                if (hours != 0) {
-                    timeString = String.format("%02d:%02d:%02d", hours, minutes, secs)
-                } else {
-                    timeString = String.format("%02d:%02d", minutes, secs)
-                }
-                viewBinding.Time.text = timeString
+                if (isRunning) {
+                    val hours = seconds / 3600
+                    val minutes = (seconds % 3600) / 60
+                    val secs = seconds % 60
+                    val timeString = if (hours != 0) {
+                        String.format("%02d:%02d:%02d", hours, minutes, secs)
+                    } else {
+                        String.format("%02d:%02d", minutes, secs)
+                    }
+                    viewBinding.Time.text = timeString
 
-                seconds++
-                handler.postDelayed(this, 1000) // Cập nhật sau mỗi giây
+                    seconds++
+                    handler.postDelayed(this, 1000) // Cập nhật sau mỗi giây
+                }
             }
-        })
+        }
+        handler.post(runnable)
+    }
+    private fun pauseTimer() {
+        isRunning = false
+        handler.removeCallbacks(runnable)
+    }
+
+    private fun resumeTimer() {
+        isRunning = true
+        handler.post(runnable)
     }
 
     private fun getDataWorkout() {

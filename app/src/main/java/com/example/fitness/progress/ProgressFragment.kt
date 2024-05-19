@@ -14,8 +14,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fitness.adapter_recyclerView.adapter_progress.AdapterProgress
 import com.example.fitness.databinding.LayoutDialogDeleteHistoryBinding
-import com.example.fitness.databinding.LayoutDialogDeleteWorkoutBinding
-import com.example.fitness.databinding.LayoutDialogEndWorkoutBinding
 import com.example.fitness.databinding.LayoutDialogUpdateValueBinding
 import com.example.fitness.databinding.LayoutProgressBinding
 import com.example.fitness.model.History
@@ -66,7 +64,7 @@ class ProgressFragment : Fragment() {
     }
     @SuppressLint("NotifyDataSetChanged")
     private fun getDataHistory(userId : String?){
-        historyViewModel.getAllLiveDataExercise(userId)?.observe(viewLifecycleOwner){
+        historyViewModel.getDataHistory(userId)?.observe(viewLifecycleOwner){
             if(it != null){
                 for(history in it){
                     Log.d("History Id : ", history.getId().toString())

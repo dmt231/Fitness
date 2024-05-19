@@ -3,6 +3,7 @@ package com.example.fitness.storage
 import android.content.Context
 import android.content.SharedPreferences
 import com.example.fitness.model.WorkoutInPlan
+import kotlin.math.min
 
 class Preferences(private val context: Context) {
     private val myPreferences : String = "MyPreferences"
@@ -81,5 +82,32 @@ class Preferences(private val context: Context) {
         val editor : SharedPreferences.Editor = sharedPreferences!!.edit()
         editor.clear()
         editor.apply()
+    }
+    fun putPermissionNotification(value : Boolean){
+        val sharedPreferences : SharedPreferences? = context.getSharedPreferences(myPreferences, Context.MODE_PRIVATE)
+        val editor : SharedPreferences.Editor = sharedPreferences!!.edit()
+        editor.putBoolean("Allow_Notification", value)
+        editor.apply()
+    }
+    fun getPermissionNotification() : Boolean{
+        val sharedPreferences : SharedPreferences? = context.getSharedPreferences(myPreferences, Context.MODE_PRIVATE)
+        return sharedPreferences!!.getBoolean("Allow_Notification", false)
+    }
+    fun putTimeNotification(hour : String, minute : String){
+        val sharedPreferences : SharedPreferences? = context.getSharedPreferences(myPreferences, Context.MODE_PRIVATE)
+        val editor : SharedPreferences.Editor = sharedPreferences!!.edit()
+        editor.putString("Hour", hour)
+        editor.putString("Minute", minute)
+        editor.apply()
+    }
+    fun getTimeNotification() : String{
+        val sharedPreferences : SharedPreferences? = context.getSharedPreferences(myPreferences, Context.MODE_PRIVATE)
+        var result = ""
+        val hour = sharedPreferences!!.getString("Hour", null)
+        val minute = sharedPreferences.getString("Minute", null)
+        if(hour != null && minute != null){
+            result = "$hour : $minute"
+        }
+        return result
     }
 }

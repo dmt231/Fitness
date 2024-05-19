@@ -45,7 +45,7 @@ class FinalSetUpFragment : Fragment() {
         val weight = preferences.getWeightValues()
         val height = preferences.getHeightValues()
         val bmi = preferences.getBMIValues()
-        userRepository.updateDetailInfoForUser(gender!!,birthday!!, metric!!,weight!!,height!!,bmi!!,userId!!)
+        userRepository.updateDetailInfoForUser(gender!!,birthday!!, metric!!,weight!!,height!!,bmi!!,userId!!,"","","")
 
     }
     private fun changedToMainScreen(){

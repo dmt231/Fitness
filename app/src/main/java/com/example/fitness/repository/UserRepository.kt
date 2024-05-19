@@ -114,12 +114,15 @@ class UserRepository {
         weight: String,
         height: String,
         bmi: String,
-        userId: String
+        userId: String,
+        deadlift: String,
+        squat: String,
+        benchPress: String,
     ) {
         val documentRef = fireStore.collection("User").document(userId)
         documentRef.update(
             "gender", gender, "birthday", birthDay,
-            "metric", metric, "weight", weight, "height", height, "bmi", bmi
+            "metric", metric, "weight", weight, "height", height, "bmi", bmi, "deadlift",deadlift, "squat", squat, "bench press" , benchPress
         )
             .addOnCompleteListener {
                 Log.d("Status Update : ", "Success")

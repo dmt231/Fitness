@@ -59,9 +59,13 @@ class AdapterSelectSetRepForExercise(
                 val rep = holder.viewBinding.editTxtRep.text.toString()
                 if (set.isEmpty()) {
                     holder.viewBinding.editTxtSet.error = "Hãy điền số set"
-                } else {
+                }else if(rep.isEmpty()){
+                    holder.viewBinding.editTxtRep.error = "Hãy điền số rep"
+                }
+                else {
                     val setAndRep = "$set Sets x $rep Reps"
                     model.updateSetAndRep(setAndRep)
+                    showToast.showToast()
                 }
             }
 
@@ -70,17 +74,28 @@ class AdapterSelectSetRepForExercise(
                 val minutes = holder.viewBinding.editTxtMinute.text.toString()
                 val second = holder.viewBinding.editTxtSecond.text.toString()
                 var setAndRep = "Mặc Định"
-                if (minutes.toInt() == 0 && second.isNotEmpty()) {
+                if (minutes == "0" && second != "") {
                     setAndRep = "${second.toInt()} Second"
-                } else if (second.toInt() == 0 && minutes.isNotEmpty()) {
+                    model.updateSetAndRep(setAndRep)
+                    showToast.showToast()
+                } else if (second == "0" && minutes != "") {
                     setAndRep = "$minutes Minutes"
-                } else if (minutes.isNotEmpty() && second.isNotEmpty()) {
+                    model.updateSetAndRep(setAndRep)
+                    showToast.showToast()
+                } else if (minutes != "" && second != "") {
                     setAndRep = "$minutes Minutes $second Second"
+                    model.updateSetAndRep(setAndRep)
+                    showToast.showToast()
+                }else if(minutes == "" && second == ""){
+                    holder.viewBinding.editTxtMinute.error = "Hãy điền số phút"
+                    holder.viewBinding.editTxtSecond.error = "Hãy điền số giây"
+                }else if(second == "") {
+                    holder.viewBinding.editTxtSecond.error = "Hãy điền số giây"
+                }else{
+                    holder.viewBinding.editTxtMinute.error = "Hãy điền số phút"
                 }
-                model.updateSetAndRep(setAndRep)
-
             }
-            showToast.showToast()
+
         }
     }
 

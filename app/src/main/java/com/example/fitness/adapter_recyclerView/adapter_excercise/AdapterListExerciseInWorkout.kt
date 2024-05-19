@@ -33,7 +33,12 @@ class AdapterListExerciseInWorkout(listExercise: ArrayList<ExerciseInWorkout> , 
                 .into(holder.viewBinding.imagesCustomList)
         }
         holder.viewBinding.nameExercise.text = exerciseModel.getName()
-        holder.viewBinding.setRep.text = exerciseModel.getSetAndRep()
+        val splitResult = exerciseModel.getSetAndRep().toString().split(" ")
+        when(splitResult[1]){
+            "Minutes" ->{holder.viewBinding.setRep.text = "${splitResult[0]} Phút"}
+            "Second" ->{holder.viewBinding.setRep.text = "${splitResult[0]} Giây"}
+            "Hour" ->{holder.viewBinding.setRep.text = "${splitResult[0]} Giờ"}
+        }
         holder.viewBinding.linearLayoutCustomItem.setOnClickListener {
             onClick.onClickListener(exerciseModel.getIdExercise().toString())
         }
