@@ -66,7 +66,7 @@ class SettingFragment : Fragment() {
     private fun changeToNutritionFragment() {
         val nutritionFragment = NutritionFragment()
         val fragmentTrans = requireActivity().supportFragmentManager.beginTransaction()
-        fragmentTrans.replace(R.id.layout_main_activity, nutritionFragment)
+        fragmentTrans.add(R.id.layout_main_activity, nutritionFragment)
         fragmentTrans.addToBackStack(nutritionFragment.tag)
         fragmentTrans.commit()
     }

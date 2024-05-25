@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_height="match_parent"
-    android:id="@+id/layout_list_plan"
+    android:id="@+id/layout_list_nutrition"
     android:background="@color/white">
     <RelativeLayout
         android:layout_width="match_parent"

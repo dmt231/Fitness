@@ -32,6 +32,9 @@ class NutritionFragment : Fragment() {
         viewBinding.btnBack.setOnClickListener {
             requireActivity().supportFragmentManager.popBackStack()
         }
+        viewBinding.layoutListNutrition.setOnClickListener {
+            //DO NOTHING
+        }
         listNutrition = ArrayList()
         getData()
         setUpRecyclerView()

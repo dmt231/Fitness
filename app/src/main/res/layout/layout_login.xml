@@ -108,6 +108,19 @@
                     android:indeterminate="true"
                     android:indeterminateDrawable="@drawable/custom_progress_bar"
                     />
+                <TextView
+                    android:id="@+id/txtForgotPassword"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/forgotPassword"
+                    android:textColor="@color/white"
+                    android:fontFamily="sans-serif-condensed-medium"
+                    android:textSize="@dimen/_12ssp"
+                    android:layout_alignTop="@id/buttonLogin"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_50sdp"/>
+
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
     </androidx.constraintlayout.widget.ConstraintLayout>

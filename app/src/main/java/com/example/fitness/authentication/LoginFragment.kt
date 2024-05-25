@@ -6,11 +6,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.fitness.MainActivity
 import com.example.fitness.databinding.LayoutLoginBinding
 import com.example.fitness.repository.UserRepository
 import com.example.fitness.storage.Preferences
+import com.google.firebase.auth.FirebaseAuth
 
 class LoginFragment : Fragment() {
     private lateinit var viewBinding : LayoutLoginBinding
@@ -46,9 +48,23 @@ class LoginFragment : Fragment() {
                 })
             }
         }
+        viewBinding.txtForgotPassword.setOnClickListener {
+            resetPassword()
+        }
         setUpAnimation()
         return viewBinding.root
     }
+
+    private fun resetPassword() {
+        val auth = FirebaseAuth.getInstance()
+        auth.sendPasswordResetEmail(viewBinding.emailLogin.text.toString())
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    Toast.makeText(requireContext(), "Vui lòng kiểm tra email", Toast.LENGTH_SHORT).show()
+                }
+            }
+    }
+
     private fun onBack(){
         requireActivity().supportFragmentManager.popBackStack()
     }
