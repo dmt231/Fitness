@@ -134,6 +134,10 @@ class PersonalWorkoutFragment : Fragment() {
             workoutRepository.deleteWorkout(workoutItem.idWorkout)
             listWorkoutForResult.removeAt(position)
             adapter.notifyItemRemoved(position)
+            if(listWorkoutForResult.size == 0){
+                viewBinding.recyclerViewMyWorkout.visibility = View.GONE
+                viewBinding.linearLayout.visibility = View.VISIBLE
+            }
             dialog.cancel()
         }
         dialog.show()

@@ -2,6 +2,8 @@ package com.example.fitness.setting.notification
 
 import android.Manifest
 import android.app.AlarmManager
+import android.app.AlertDialog
+import android.app.Dialog
 import android.app.PendingIntent
 import android.app.TimePickerDialog
 import android.content.Context
@@ -86,7 +88,7 @@ class NotificationFragment : Fragment() {
     }
 
     private fun showPermissionDialog() {
-        val dialog = MaterialAlertDialogBuilder(requireContext())
+        val dialog = AlertDialog.Builder(context)
             .setTitle("Yêu Cầu Quyền Truy Cập")
             .setMessage("Cho phép ứng dụng được quyền gửi thông báo?")
             .setPositiveButton("Cho Phép") { dialogInterface, _ ->
@@ -94,10 +96,10 @@ class NotificationFragment : Fragment() {
                 dialogInterface.cancel()
             }
             .setNegativeButton("Từ Chối") { dialogInterface, _ ->
+                savePermissionToPreferences(false)
+                viewBinding.switchButton.isChecked = false
                 dialogInterface.cancel()
             }
-            .create()
-
         dialog.show()
     }
 
@@ -114,6 +116,10 @@ class NotificationFragment : Fragment() {
         if (requestCode == requestPermission) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 savePermissionToPreferences(true)
+            }
+            else if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_DENIED){
+                savePermissionToPreferences(false)
+                viewBinding.switchButton.isChecked = false
             }
         }
     }

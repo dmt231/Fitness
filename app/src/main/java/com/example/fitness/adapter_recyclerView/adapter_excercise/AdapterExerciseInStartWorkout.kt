@@ -47,11 +47,15 @@ class AdapterExerciseInStartWorkout(
         if (exerciseModel.getRep() != null) {
             holder.viewBinding.rep.text = exerciseModel.getRep() + " Rep"
         } else {
-            val splitResult = exerciseModel.getSetAndRep().toString().split(" ")
-            when(splitResult[1]){
-                "Minutes" ->{holder.viewBinding.rep.text = "${splitResult[0]} Phút"}
-                "Second" ->{holder.viewBinding.rep.text = "${splitResult[0]} Giây"}
-                "Hour" ->{holder.viewBinding.rep.text = "${splitResult[0]} Giờ"}
+            if(!exerciseModel.getSetAndRep()!!.contains("One Rep Max")){
+                val splitResult = exerciseModel.getSetAndRep().toString().split(" ")
+                when(splitResult[1]){
+                    "Minutes" ->{holder.viewBinding.rep.text = "${splitResult[0]} Phút"}
+                    "Second" ->{holder.viewBinding.rep.text = "${splitResult[0]} Giây"}
+                    "Hour" ->{holder.viewBinding.rep.text = "${splitResult[0]} Giờ"}
+                }
+            }else{
+                holder.viewBinding.rep.text = exerciseModel.getSetAndRep()
             }
         }
         holder.viewBinding.checkBox.isChecked = exerciseModel.getChecked()

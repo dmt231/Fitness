@@ -33,11 +33,21 @@ class AdapterListExerciseInWorkout(listExercise: ArrayList<ExerciseInWorkout> , 
                 .into(holder.viewBinding.imagesCustomList)
         }
         holder.viewBinding.nameExercise.text = exerciseModel.getName()
-        val splitResult = exerciseModel.getSetAndRep().toString().split(" ")
-        when(splitResult[1]){
-            "Minutes" ->{holder.viewBinding.setRep.text = "${splitResult[0]} Phút"}
-            "Second" ->{holder.viewBinding.setRep.text = "${splitResult[0]} Giây"}
-            "Hour" ->{holder.viewBinding.setRep.text = "${splitResult[0]} Giờ"}
+        if(exerciseModel.getSetAndRep().toString().contains("Minutes") ||exerciseModel.getSetAndRep().toString().contains("Second") ||exerciseModel.getSetAndRep().toString().contains("Hour")) {
+            val splitResult = exerciseModel.getSetAndRep().toString().split(" ")
+            when (splitResult[1]) {
+                "Minutes" -> {
+                    holder.viewBinding.setRep.text = "${splitResult[0]} Phút"
+                }
+                "Second" -> {
+                    holder.viewBinding.setRep.text = "${splitResult[0]} Giây"
+                }
+                "Hour" -> {
+                    holder.viewBinding.setRep.text = "${splitResult[0]} Giờ"
+                }
+            }
+        }else{
+            holder.viewBinding.setRep.text = exerciseModel.getSetAndRep()
         }
         holder.viewBinding.linearLayoutCustomItem.setOnClickListener {
             onClick.onClickListener(exerciseModel.getIdExercise().toString())

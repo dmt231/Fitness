@@ -44,7 +44,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-medium"
                 android:textSize="@dimen/_12ssp"
-                android:text="12 Reps 3 Sets"/>
+                />
         </RelativeLayout>
     </LinearLayout>
 </LinearLayout>

@@ -144,8 +144,10 @@ class WorkoutRepository {
                     val listWorkout = ArrayList<Workout>()
                     for (workout in it.result) {
                         val timeWorkout = workout.get("Time", Int::class.java)
-                        if (time.contains("<")) {
-                            if (timeWorkout!! < timePart[1].toInt()) {
+                        Log.d("TimeWorkout : ", timeWorkout.toString())
+                        Log.d("TimePart", timePart[1])
+                        if (timeWorkout != null) {
+                            if (timeWorkout < timePart[1].toInt()) {
                                 val id = workout.getString("IdWorkout")
                                 val difficulty = workout.getString("Difficulty")
                                 val equipment = workout.getString("Equipement")

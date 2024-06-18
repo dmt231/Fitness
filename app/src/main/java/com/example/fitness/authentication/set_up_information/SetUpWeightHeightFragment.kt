@@ -32,7 +32,7 @@ class SetUpWeightHeightFragment : Fragment() {
             weight = i2.toString()
             if(viewBinding.height.value != 0) {
                 val resultBmi = i2.toFloat() / (((viewBinding.height.value) / 100F) * ((viewBinding.height.value) / 100F))
-                val formattedBmi = String.format(Locale.getDefault(), "%.2f", resultBmi)
+                val formattedBmi = String.format(Locale.getDefault(), "%.2f", resultBmi).replace(',','.')
                 bmi = formattedBmi
                 Log.d("Bmi : ", bmi)
                 viewBinding.BmiValue.text = bmi

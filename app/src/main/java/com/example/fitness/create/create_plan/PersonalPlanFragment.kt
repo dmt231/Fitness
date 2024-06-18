@@ -121,13 +121,13 @@ class PersonalPlanFragment : Fragment() {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         val viewDialogBinding = LayoutDialogDeletePlanBinding.inflate(dialog.layoutInflater)
         dialog.setContentView(viewDialogBinding.root)
+        dialog.setCancelable(false)
         val window = dialog.window
         window!!.setLayout(
             WindowManager.LayoutParams.MATCH_PARENT,
             WindowManager.LayoutParams.WRAP_CONTENT
         )
         window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-
         val windowAttributes = window.attributes
         windowAttributes.gravity = Gravity.CENTER
         window.attributes = windowAttributes
@@ -140,6 +140,10 @@ class PersonalPlanFragment : Fragment() {
             planRepository.deletePlan(planItem.idPlan)
             listPlanForResult.removeAt(position)
             adapter.notifyItemRemoved(position)
+            if(listPlanForResult.size == 0){
+                viewBinding.recyclerViewMyPlan.visibility = View.GONE
+                viewBinding.linearLayout.visibility = View.VISIBLE
+            }
             dialog.cancel()
         }
         dialog.show()

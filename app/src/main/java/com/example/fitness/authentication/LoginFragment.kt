@@ -29,6 +29,9 @@ class LoginFragment : Fragment() {
         viewBinding.btnBack.setOnClickListener {
             onBack()
         }
+        viewBinding.layoutMainLogin.setOnClickListener {
+            //DO NOTHING.
+        }
         viewBinding.buttonLogin.setOnClickListener {
             viewBinding.progressBarSignIn.visibility = View.VISIBLE
             viewBinding.buttonLogin.visibility = View.INVISIBLE

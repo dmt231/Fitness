@@ -168,11 +168,10 @@ class StartWorkout : Fragment() {
 
         val userId = Preferences(requireContext()).getUserIdValues()
 
-        val workoutOutputName: String
-        if(workout != null){
-            workoutOutputName = workout!!.name!!
+        val workoutOutputName: String = if(workout != null){
+            workout!!.name!!
         }else{
-            workoutOutputName = personalWorkout!!.nameWorkout
+            personalWorkout!!.nameWorkout
         }
 
         userRepository?.createHistoryForUser(
@@ -284,9 +283,8 @@ class StartWorkout : Fragment() {
             val setAndRep = exercise.getSetAndRep()
             if (setAndRep != null) {
                 if (!setAndRep.contains("Minutes") && !setAndRep.contains("Second") && !setAndRep.contains(
-                        "Hour"
-                    )
-                ) {
+                        "Hour") && !setAndRep.contains("One Rep Max")) {
+                    //Example 4 sets 8 rep -> [0] = 4 , [3] = 8
                     val splitSetRep = setAndRep.split(" ")
                     val set = splitSetRep[0].toInt()
                     val rep = splitSetRep[3].toInt()
@@ -369,6 +367,8 @@ class StartWorkout : Fragment() {
             override fun onFinish() {
                 mediaPlayer = MediaPlayer.create(context, R.raw.ting_ting)
                 mediaPlayer?.start()
+                timeLeft = timeStart
+                timeProgress = 0
                 dialog.cancel()
             }
 
